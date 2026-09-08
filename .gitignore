@@ -1,0 +1,57 @@
+# ---- Borrower data and secrets: NEVER commit ----
+borrower-data/
+**/borrower-data/
+*.env
+.env
+.env.*
+!.env.example
+secrets/
+credentials/
+*.pem
+*.key
+*.p12
+*.pfx
+*token*
+*.credentials.json
+.claude/settings.local.json
+
+# ---- Raw run outputs (derived data only; re-generated per run) ----
+output/*
+!output/audits/
+output/audits/*
+!output/audits/README.md
+!output/drafts/
+output/drafts/*
+!output/drafts/README.md
+
+# ---- OCR / extraction temporaries and logs that may carry PII ----
+*.ocr.txt
+*.ocr.json
+ocr-cache/
+tmp/
+temp/
+*.log
+logs/
+
+# ---- Raw loan documents anywhere outside the de-identified fixture tree ----
+*.pdf
+!docs/source-checklists/*.pdf
+!tests/fixtures/deidentified/**/*.pdf
+
+# ---- Python ----
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+*.egg-info/
+.coverage
+htmlcov/
+
+# ---- OS / editor ----
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*~

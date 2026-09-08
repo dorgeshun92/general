@@ -1,0 +1,19 @@
+# Who may approve what. Fill in names once decided (docs/decisions-needed.md,
+# questions 5 and 8). Roles map to the reviewer_role enum in
+# schemas/common.defs.schema.json.
+roles:
+  LOAN_OFFICER:
+    may_approve: [borrower_communication_drafts, client_needs]
+    members: []
+  PROCESSOR:
+    may_approve: [los_field_corrections, los_notes, document_classification_overrides]
+    members: []
+  UNDERWRITER:
+    may_approve: [income_calculation_specs, guideline_interpretations, answer_keys]
+    members: []
+  COMPLIANCE:
+    may_approve: [approved_sources, hook_and_permission_activation, trid_related_findings]
+    members: []
+  MANAGEMENT:
+    may_approve: [integration_activation, write_authority_changes, production_pilot]
+    members: []

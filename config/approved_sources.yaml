@@ -1,0 +1,15 @@
+# Approved guideline sources. A skill may quote or cite ONLY sources listed
+# here, and must record the source_id and effective_date with every citation.
+#
+# STATUS: EMPTY. No guideline source is approved yet (see docs/decisions-needed.md,
+# question 4). Until an authorized person adds entries, every finding whose
+# evaluation_method is guideline_lookup must be REVIEW.
+sources: []
+#  - source_id: GL-EXAMPLE-001
+#    title: "<internal or investor guideline title>"
+#    path: docs/guidelines/<file>
+#    sha256: "<64 hex>"
+#    effective_date: "YYYY-MM-DD"
+#    approved_by: "<name, role>"
+#    approved_at: "YYYY-MM-DD"
+#    scope: "<products / topics this source may be cited for>"

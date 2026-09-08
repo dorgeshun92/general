@@ -1,0 +1,41 @@
+# Checklist catalog — normalized source checklist items.
+#
+# STATUS: EMPTY TEMPLATE. The three source PDFs were not available when this
+# repository was scaffolded, so no items exist yet. Do NOT hand-write items
+# from memory: every item must trace to a source document and page.
+#
+# To populate: place the PDFs in docs/source-checklists/ and follow
+# docs/checklist-normalization.md. Validate with:
+#   python scripts/validate_schema.py config/checklist_catalog.yaml --schema checklist_catalog
+#
+# Id convention: <PHASE>-<CATEGORY>-<NNN>, e.g. PRE-CREDIT-001, SUB-PROPERTY-004.
+# Phases: PRE (preapproval), SUB (submission).
+catalog_version: "0.1.0"
+normalized_at: null
+reviewed_by: null
+reviewed_at: null
+sources: []
+#  - source_id: SRC-PREAPPROVAL
+#    title: Mako Mortgage Processing Pre-approval Checklist
+#    filename: mako-preapproval-checklist.pdf
+#    sha256: "<64 hex>"
+#    page_count: 0
+#    version_or_date: null
+items: []
+#  - id: PRE-CREDIT-001
+#    source_document: SRC-PREAPPROVAL
+#    source_page: 1
+#    source_text: "<verbatim wording from the PDF>"
+#    phase: PREAPPROVAL
+#    category: CREDIT
+#    applies_when: always
+#    required_evidence: [CREDIT_REPORT]
+#    fields_to_compare: []
+#    evaluation_method: deterministic        # deterministic | guideline_lookup | human_judgment
+#    result_values: [PASS, FAIL, MISSING, REVIEW, NOT_APPLICABLE]
+#    blocking_if_failed: true
+#    proposed_action: "<what a human should do if this fails>"
+#    required_human_role: PROCESSOR         # or null
+#    ambiguous: false
+conflicts: []
+consolidation_decisions: []

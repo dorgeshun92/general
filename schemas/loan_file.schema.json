@@ -1,0 +1,354 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mpire.local/schemas/loan_file.schema.json",
+  "title": "Canonical loan file",
+  "description": "The single JSON object every skill exchanges. Every non-null extracted value cites evidence. Unknown values stay null; nothing is inferred.",
+  "type": "object",
+  "required": ["schema_version", "loan_id", "generated_at", "generated_by", "source", "loan", "borrowers", "income", "assets", "liabilities", "properties", "contract", "documents", "evidence", "review_items"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "type": "string", "const": "1.0" },
+    "loan_id": { "$ref": "common.defs.schema.json#/$defs/loan_id" },
+    "generated_at": { "$ref": "common.defs.schema.json#/$defs/iso_datetime" },
+    "generated_by": {
+      "type": "object",
+      "required": ["skill", "run_id"],
+      "properties": {
+        "skill": { "type": "string", "minLength": 1 },
+        "run_id": { "$ref": "common.defs.schema.json#/$defs/run_id" },
+        "tool_versions": { "type": "object", "additionalProperties": { "type": "string" } }
+      },
+      "additionalProperties": false
+    },
+    "source": {
+      "type": "object",
+      "required": ["input_directory", "deidentified", "manifest_sha256"],
+      "properties": {
+        "input_directory": { "type": "string", "minLength": 1 },
+        "deidentified": { "type": "boolean", "const": true },
+        "manifest_sha256": { "$ref": "common.defs.schema.json#/$defs/sha256" }
+      },
+      "additionalProperties": false
+    },
+    "loan": { "$ref": "#/$defs/loan" },
+    "borrowers": { "type": "array", "items": { "$ref": "#/$defs/borrower" } },
+    "income": { "type": "array", "items": { "$ref": "#/$defs/income" } },
+    "assets": { "type": "array", "items": { "$ref": "#/$defs/asset" } },
+    "liabilities": { "type": "array", "items": { "$ref": "#/$defs/liability" } },
+    "properties": { "type": "array", "items": { "$ref": "#/$defs/property" } },
+    "contract": { "oneOf": [ { "$ref": "#/$defs/contract" }, { "type": "null" } ] },
+    "documents": { "type": "array", "items": { "$ref": "#/$defs/document" } },
+    "evidence": { "type": "array", "items": { "$ref": "#/$defs/evidence" } },
+    "review_items": {
+      "type": "array",
+      "description": "Intake-level items needing a human: low-confidence OCR, conflicting names, unreadable files.",
+      "items": { "$ref": "#/$defs/review_item" }
+    },
+    "los_export": {
+      "oneOf": [
+        { "type": "null" },
+        {
+          "type": "object",
+          "required": ["system", "exported_at", "document_id", "fields"],
+          "properties": {
+            "system": { "type": "string", "enum": ["ARIVE", "LENDINGPAD", "OTHER"] },
+            "exported_at": { "$ref": "common.defs.schema.json#/$defs/nullable_iso_date" },
+            "document_id": { "$ref": "common.defs.schema.json#/$defs/document_id" },
+            "fields": { "type": "object", "additionalProperties": { "$ref": "common.defs.schema.json#/$defs/fact" } }
+          },
+          "additionalProperties": false
+        }
+      ]
+    }
+  },
+  "$defs": {
+    "loan": {
+      "type": "object",
+      "required": ["purpose", "occupancy", "product_family", "lender", "loan_amount", "closing_date", "status"],
+      "properties": {
+        "purpose": { "allOf": [ { "$ref": "common.defs.schema.json#/$defs/fact" }, { "properties": { "value": { "enum": ["PURCHASE", "REFINANCE_RATE_TERM", "REFINANCE_CASH_OUT", "CONSTRUCTION", "OTHER", null] } } } ] },
+        "occupancy": { "allOf": [ { "$ref": "common.defs.schema.json#/$defs/fact" }, { "properties": { "value": { "enum": ["PRIMARY", "SECOND_HOME", "INVESTMENT", null] } } } ] },
+        "product_family": { "allOf": [ { "$ref": "common.defs.schema.json#/$defs/fact" }, { "properties": { "value": { "enum": ["CONVENTIONAL", "FHA", "VA", "USDA", "NON_QM", "OTHER", null] } } } ] },
+        "lender": { "$ref": "common.defs.schema.json#/$defs/string_fact" },
+        "loan_amount": { "$ref": "common.defs.schema.json#/$defs/money_fact" },
+        "closing_date": { "$ref": "common.defs.schema.json#/$defs/date_fact" },
+        "status": { "$ref": "common.defs.schema.json#/$defs/string_fact" },
+        "rate_lock_expiration": { "$ref": "common.defs.schema.json#/$defs/date_fact" },
+        "preapproval_expiration": { "$ref": "common.defs.schema.json#/$defs/date_fact" }
+      },
+      "additionalProperties": false
+    },
+    "borrower": {
+      "type": "object",
+      "required": ["borrower_id", "role", "full_name", "aliases", "citizenship_status", "residence_history", "employment_history"],
+      "properties": {
+        "borrower_id": { "$ref": "common.defs.schema.json#/$defs/borrower_id" },
+        "role": { "type": "string", "enum": ["BORROWER", "CO_BORROWER", "NON_OCCUPANT_CO_BORROWER", "NON_BORROWING_SPOUSE"] },
+        "full_name": { "$ref": "common.defs.schema.json#/$defs/string_fact" },
+        "aliases": { "type": "array", "items": { "$ref": "common.defs.schema.json#/$defs/string_fact" } },
+        "date_of_birth": { "$ref": "common.defs.schema.json#/$defs/date_fact" },
+        "ssn_last4": { "oneOf": [ { "type": "string", "pattern": "^[0-9]{4}$" }, { "type": "null" } ] },
+        "citizenship_status": { "allOf": [ { "$ref": "common.defs.schema.json#/$defs/fact" }, { "properties": { "value": { "enum": ["US_CITIZEN", "PERMANENT_RESIDENT", "NON_PERMANENT_RESIDENT", "OTHER", null] } } } ] },
+        "residence_history": { "type": "array", "items": { "$ref": "#/$defs/residence" } },
+        "employment_history": { "type": "array", "items": { "$ref": "#/$defs/employment" } }
+      },
+      "additionalProperties": false
+    },
+    "residence": {
+      "type": "object",
+      "required": ["address", "period", "tenure", "monthly_payment", "evidence_ids"],
+      "properties": {
+        "address": { "$ref": "common.defs.schema.json#/$defs/address" },
+        "period": { "$ref": "common.defs.schema.json#/$defs/period" },
+        "tenure": { "type": ["string", "null"], "enum": ["OWN", "RENT", "RENT_FREE", null] },
+        "monthly_payment": { "$ref": "common.defs.schema.json#/$defs/nullable_decimal_string" },
+        "evidence_ids": { "type": "array", "items": { "$ref": "common.defs.schema.json#/$defs/evidence_id" } }
+      },
+      "additionalProperties": false
+    },
+    "employment": {
+      "type": "object",
+      "required": ["employer", "position", "period", "self_employed", "employment_type", "evidence_ids"],
+      "properties": {
+        "employer": { "$ref": "common.defs.schema.json#/$defs/nullable_string" },
+        "position": { "$ref": "common.defs.schema.json#/$defs/nullable_string" },
+        "period": { "$ref": "common.defs.schema.json#/$defs/period" },
+        "self_employed": { "type": ["boolean", "null"] },
+        "ownership_percent": { "$ref": "common.defs.schema.json#/$defs/nullable_decimal_string" },
+        "employment_type": { "type": ["string", "null"], "enum": ["CURRENT_PRIMARY", "CURRENT_SECONDARY", "PREVIOUS", null] },
+        "evidence_ids": { "type": "array", "items": { "$ref": "common.defs.schema.json#/$defs/evidence_id" } }
+      },
+      "additionalProperties": false
+    },
+    "income": {
+      "type": "object",
+      "required": ["income_id", "borrower_id", "type", "source_name", "period", "document_ids", "calculated_monthly_amount", "calculation", "used_to_qualify", "confidence"],
+      "properties": {
+        "income_id": { "type": "string", "pattern": "^INC-[0-9]{3}$" },
+        "borrower_id": { "$ref": "common.defs.schema.json#/$defs/borrower_id" },
+        "type": { "type": "string", "enum": ["SALARY", "HOURLY", "OVERTIME", "BONUS", "COMMISSION", "SELF_EMPLOYED", "RENTAL", "PENSION", "SOCIAL_SECURITY", "DISABILITY", "CHILD_SUPPORT", "ALIMONY", "ASSET_DEPLETION", "OTHER"] },
+        "source_name": { "$ref": "common.defs.schema.json#/$defs/nullable_string" },
+        "period": { "$ref": "common.defs.schema.json#/$defs/period" },
+        "document_ids": { "type": "array", "items": { "$ref": "common.defs.schema.json#/$defs/document_id" } },
+        "stated_monthly_amount_1003": { "$ref": "common.defs.schema.json#/$defs/money_fact" },
+        "calculated_monthly_amount": { "$ref": "common.defs.schema.json#/$defs/nullable_decimal_string" },
+        "calculation": {
+          "description": "Null when no supported deterministic method applies; the item is then routed to REVIEW.",
+          "oneOf": [ { "$ref": "common.defs.schema.json#/$defs/calculation_trail" }, { "type": "null" } ]
+        },
+        "used_to_qualify": { "type": ["boolean", "null"] },
+        "potential_additional_income": { "type": "boolean", "default": false },
+        "confidence": { "$ref": "common.defs.schema.json#/$defs/confidence" },
+        "evidence_ids": { "type": "array", "items": { "$ref": "common.defs.schema.json#/$defs/evidence_id" } }
+      },
+      "if": { "properties": { "calculated_monthly_amount": { "type": "string" } }, "required": ["calculated_monthly_amount"] },
+      "then": { "properties": { "calculation": { "type": "object" } } },
+      "additionalProperties": false
+    },
+    "asset": {
+      "type": "object",
+      "required": ["asset_id", "owner_borrower_ids", "institution", "account_number_masked", "account_type", "statement_period", "ending_balance", "large_deposits", "usable_amount", "document_ids"],
+      "properties": {
+        "asset_id": { "type": "string", "pattern": "^AST-[0-9]{3}$" },
+        "owner_borrower_ids": { "type": "array", "items": { "$ref": "common.defs.schema.json#/$defs/borrower_id" } },
+        "institution": { "$ref": "common.defs.schema.json#/$defs/string_fact" },
+        "account_number_masked": { "$ref": "common.defs.schema.json#/$defs/nullable_masked_account" },
+        "account_type": { "type": ["string", "null"], "enum": ["CHECKING", "SAVINGS", "MONEY_MARKET", "CD", "BROKERAGE", "RETIREMENT_401K", "RETIREMENT_IRA", "RETIREMENT_OTHER", "GIFT", "OTHER", null] },
+        "statement_period": { "$ref": "common.defs.schema.json#/$defs/period" },
+        "beginning_balance": { "$ref": "common.defs.schema.json#/$defs/money_fact" },
+        "ending_balance": { "$ref": "common.defs.schema.json#/$defs/money_fact" },
+        "large_deposits": { "type": "array", "items": { "$ref": "#/$defs/deposit" } },
+        "usable_amount": { "$ref": "common.defs.schema.json#/$defs/nullable_decimal_string" },
+        "usable_amount_calculation": { "oneOf": [ { "$ref": "common.defs.schema.json#/$defs/calculation_trail" }, { "type": "null" } ] },
+        "document_ids": { "type": "array", "items": { "$ref": "common.defs.schema.json#/$defs/document_id" } }
+      },
+      "additionalProperties": false
+    },
+    "deposit": {
+      "type": "object",
+      "required": ["date", "amount", "description", "sourced", "evidence_ids"],
+      "properties": {
+        "date": { "$ref": "common.defs.schema.json#/$defs/nullable_iso_date" },
+        "amount": { "$ref": "common.defs.schema.json#/$defs/decimal_string" },
+        "description": { "$ref": "common.defs.schema.json#/$defs/nullable_string" },
+        "sourced": { "type": ["boolean", "null"] },
+        "evidence_ids": { "type": "array", "items": { "$ref": "common.defs.schema.json#/$defs/evidence_id" }, "minItems": 1 }
+      },
+      "additionalProperties": false
+    },
+    "liability": {
+      "type": "object",
+      "required": ["liability_id", "borrower_ids", "creditor", "type", "balance", "monthly_payment", "source", "excluded", "exclusion_reason", "payoff_status", "evidence_ids"],
+      "properties": {
+        "liability_id": { "type": "string", "pattern": "^LIA-[0-9]{3}$" },
+        "borrower_ids": { "type": "array", "items": { "$ref": "common.defs.schema.json#/$defs/borrower_id" } },
+        "creditor": { "$ref": "common.defs.schema.json#/$defs/nullable_string" },
+        "type": { "type": ["string", "null"], "enum": ["MORTGAGE", "HELOC", "INSTALLMENT", "REVOLVING", "STUDENT_LOAN", "AUTO_LEASE", "CHILD_SUPPORT", "ALIMONY", "COLLECTION", "TAX_LIEN", "JUDGMENT", "SOLAR", "OTHER", null] },
+        "balance": { "$ref": "common.defs.schema.json#/$defs/money_fact" },
+        "monthly_payment": { "$ref": "common.defs.schema.json#/$defs/money_fact" },
+        "source": { "type": "string", "enum": ["CREDIT_REPORT", "URLA_1003", "DOCUMENT", "LOS_EXPORT", "USER_NOTE"] },
+        "excluded": { "type": "boolean" },
+        "exclusion_reason": { "$ref": "common.defs.schema.json#/$defs/nullable_string" },
+        "payoff_status": { "type": ["string", "null"], "enum": ["REMAINS", "PAID_AT_CLOSING", "PAID_PRIOR_TO_CLOSING", "OMITTED", null] },
+        "evidence_ids": { "type": "array", "items": { "$ref": "common.defs.schema.json#/$defs/evidence_id" } }
+      },
+      "additionalProperties": false
+    },
+    "property": {
+      "type": "object",
+      "required": ["property_id", "role", "owner_borrower_ids", "address", "property_type", "taxes_monthly", "insurance_monthly", "hoa_monthly", "mortgages", "rent_monthly", "solar", "condo_status", "evidence_ids"],
+      "properties": {
+        "property_id": { "type": "string", "pattern": "^PROP-[0-9]{3}$" },
+        "role": { "type": "string", "enum": ["SUBJECT", "REO", "DEPARTING_RESIDENCE"] },
+        "owner_borrower_ids": { "type": "array", "items": { "$ref": "common.defs.schema.json#/$defs/borrower_id" } },
+        "address": { "$ref": "common.defs.schema.json#/$defs/address" },
+        "property_type": { "type": ["string", "null"], "enum": ["SFR", "CONDO", "TOWNHOUSE", "PUD", "2_4_UNIT", "MANUFACTURED", "COOP", "LAND", "OTHER", null] },
+        "taxes_monthly": { "$ref": "common.defs.schema.json#/$defs/money_fact" },
+        "insurance_monthly": { "$ref": "common.defs.schema.json#/$defs/money_fact" },
+        "hoa_monthly": { "$ref": "common.defs.schema.json#/$defs/money_fact" },
+        "mortgages": { "type": "array", "items": { "$ref": "#/$defs/property_mortgage" } },
+        "rent_monthly": { "$ref": "common.defs.schema.json#/$defs/money_fact" },
+        "solar": {
+          "type": "object",
+          "required": ["present", "arrangement", "monthly_payment", "evidence_ids"],
+          "properties": {
+            "present": { "type": ["boolean", "null"] },
+            "arrangement": { "type": ["string", "null"], "enum": ["OWNED", "LEASE", "PPA", "LOAN", "UNKNOWN", null] },
+            "monthly_payment": { "$ref": "common.defs.schema.json#/$defs/nullable_decimal_string" },
+            "evidence_ids": { "type": "array", "items": { "$ref": "common.defs.schema.json#/$defs/evidence_id" } }
+          },
+          "additionalProperties": false
+        },
+        "condo_status": { "type": ["string", "null"], "enum": ["NOT_CONDO", "WARRANTABLE", "NON_WARRANTABLE", "UNKNOWN", null] },
+        "evidence_ids": { "type": "array", "items": { "$ref": "common.defs.schema.json#/$defs/evidence_id" } }
+      },
+      "additionalProperties": false
+    },
+    "property_mortgage": {
+      "type": "object",
+      "required": ["liability_id", "lender", "balance", "monthly_payment", "includes_escrow", "evidence_ids"],
+      "properties": {
+        "liability_id": { "oneOf": [ { "type": "string", "pattern": "^LIA-[0-9]{3}$" }, { "type": "null" } ] },
+        "lender": { "$ref": "common.defs.schema.json#/$defs/nullable_string" },
+        "balance": { "$ref": "common.defs.schema.json#/$defs/nullable_decimal_string" },
+        "monthly_payment": { "$ref": "common.defs.schema.json#/$defs/nullable_decimal_string" },
+        "includes_escrow": { "type": ["boolean", "null"] },
+        "evidence_ids": { "type": "array", "items": { "$ref": "common.defs.schema.json#/$defs/evidence_id" } }
+      },
+      "additionalProperties": false
+    },
+    "contract": {
+      "type": "object",
+      "required": ["document_ids", "purchase_price", "earnest_money", "seller_concessions", "dates", "parties", "signatures", "addenda", "personal_property"],
+      "properties": {
+        "document_ids": { "type": "array", "items": { "$ref": "common.defs.schema.json#/$defs/document_id" } },
+        "purchase_price": { "$ref": "common.defs.schema.json#/$defs/money_fact" },
+        "earnest_money": { "$ref": "common.defs.schema.json#/$defs/money_fact" },
+        "seller_concessions": { "$ref": "common.defs.schema.json#/$defs/money_fact" },
+        "dates": {
+          "type": "object",
+          "required": ["contract_date", "closing_date", "financing_contingency", "appraisal_contingency", "inspection_contingency"],
+          "properties": {
+            "contract_date": { "$ref": "common.defs.schema.json#/$defs/date_fact" },
+            "closing_date": { "$ref": "common.defs.schema.json#/$defs/date_fact" },
+            "financing_contingency": { "$ref": "common.defs.schema.json#/$defs/date_fact" },
+            "appraisal_contingency": { "$ref": "common.defs.schema.json#/$defs/date_fact" },
+            "inspection_contingency": { "$ref": "common.defs.schema.json#/$defs/date_fact" }
+          },
+          "additionalProperties": false
+        },
+        "parties": {
+          "type": "object",
+          "required": ["buyers", "sellers", "listing_agent", "selling_agent", "title_or_escrow_company"],
+          "properties": {
+            "buyers": { "type": "array", "items": { "$ref": "common.defs.schema.json#/$defs/string_fact" } },
+            "sellers": { "type": "array", "items": { "$ref": "common.defs.schema.json#/$defs/string_fact" } },
+            "listing_agent": { "$ref": "common.defs.schema.json#/$defs/string_fact" },
+            "selling_agent": { "$ref": "common.defs.schema.json#/$defs/string_fact" },
+            "title_or_escrow_company": { "$ref": "common.defs.schema.json#/$defs/string_fact" }
+          },
+          "additionalProperties": false
+        },
+        "signatures": {
+          "type": "object",
+          "required": ["all_buyers_signed", "all_sellers_signed"],
+          "properties": {
+            "all_buyers_signed": { "$ref": "common.defs.schema.json#/$defs/boolean_fact" },
+            "all_sellers_signed": { "$ref": "common.defs.schema.json#/$defs/boolean_fact" }
+          },
+          "additionalProperties": false
+        },
+        "addenda": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["title", "document_id", "signed", "evidence_ids"],
+            "properties": {
+              "title": { "$ref": "common.defs.schema.json#/$defs/nullable_string" },
+              "document_id": { "$ref": "common.defs.schema.json#/$defs/document_id" },
+              "signed": { "type": ["boolean", "null"] },
+              "evidence_ids": { "type": "array", "items": { "$ref": "common.defs.schema.json#/$defs/evidence_id" } }
+            },
+            "additionalProperties": false
+          }
+        },
+        "personal_property": { "type": "array", "items": { "$ref": "common.defs.schema.json#/$defs/string_fact" } }
+      },
+      "additionalProperties": false
+    },
+    "document": {
+      "type": "object",
+      "required": ["document_id", "filename", "sha256", "document_type", "classification_confidence", "page_count", "status", "duplicate_of", "document_date"],
+      "properties": {
+        "document_id": { "$ref": "common.defs.schema.json#/$defs/document_id" },
+        "filename": { "type": "string", "minLength": 1 },
+        "relative_path": { "type": "string" },
+        "sha256": { "$ref": "common.defs.schema.json#/$defs/sha256" },
+        "size_bytes": { "type": "integer", "minimum": 0 },
+        "document_type": { "$ref": "common.defs.schema.json#/$defs/document_type" },
+        "classification_confidence": { "$ref": "common.defs.schema.json#/$defs/confidence" },
+        "page_count": { "type": ["integer", "null"], "minimum": 0 },
+        "status": { "type": "string", "enum": ["OK", "UNREADABLE", "ENCRYPTED", "DUPLICATE", "POSSIBLE_MISSING_PAGES", "REVIEW"] },
+        "duplicate_of": { "oneOf": [ { "$ref": "common.defs.schema.json#/$defs/document_id" }, { "type": "null" } ] },
+        "document_date": { "$ref": "common.defs.schema.json#/$defs/nullable_iso_date" },
+        "statement_period": { "$ref": "common.defs.schema.json#/$defs/period" },
+        "borrower_names_found": { "type": "array", "items": { "type": "string" } },
+        "masked_account_numbers_found": { "type": "array", "items": { "$ref": "common.defs.schema.json#/$defs/masked_account" } },
+        "extraction_method": { "$ref": "common.defs.schema.json#/$defs/extraction_method" },
+        "notes": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "evidence": {
+      "type": "object",
+      "required": ["evidence_id", "document_id", "document_type", "filename", "page", "document_date", "field", "extracted_value", "extraction_confidence", "extraction_method"],
+      "properties": {
+        "evidence_id": { "$ref": "common.defs.schema.json#/$defs/evidence_id" },
+        "document_id": { "$ref": "common.defs.schema.json#/$defs/document_id" },
+        "document_type": { "$ref": "common.defs.schema.json#/$defs/document_type" },
+        "filename": { "type": "string", "minLength": 1 },
+        "page": { "type": ["integer", "null"], "minimum": 1 },
+        "document_date": { "$ref": "common.defs.schema.json#/$defs/nullable_iso_date" },
+        "field": { "type": "string", "minLength": 1, "description": "What this evidence supports, e.g. income.INC-001.gross_pay_period" },
+        "extracted_value": { "type": ["string", "number", "boolean", "null"], "description": "Verbatim value as it appears on the page (masked if an account/SSN)." },
+        "extracted_text_snippet": { "type": "string", "maxLength": 500 },
+        "extraction_confidence": { "$ref": "common.defs.schema.json#/$defs/confidence" },
+        "extraction_method": { "$ref": "common.defs.schema.json#/$defs/extraction_method" }
+      },
+      "additionalProperties": false
+    },
+    "review_item": {
+      "type": "object",
+      "required": ["review_id", "category", "description", "document_ids", "reviewer_role"],
+      "properties": {
+        "review_id": { "type": "string", "pattern": "^RV-[0-9]{3}$" },
+        "category": { "type": "string", "enum": ["LOW_CONFIDENCE_EXTRACTION", "CONFLICTING_IDENTITY", "UNREADABLE_DOCUMENT", "ENCRYPTED_DOCUMENT", "POSSIBLE_MISSING_PAGES", "DUPLICATE_DOCUMENT", "UNCLASSIFIED_DOCUMENT", "POSSIBLE_LIVE_PII", "OTHER"] },
+        "description": { "type": "string", "minLength": 1 },
+        "document_ids": { "type": "array", "items": { "$ref": "common.defs.schema.json#/$defs/document_id" } },
+        "evidence_ids": { "type": "array", "items": { "$ref": "common.defs.schema.json#/$defs/evidence_id" } },
+        "reviewer_role": { "$ref": "common.defs.schema.json#/$defs/reviewer_role" }
+      },
+      "additionalProperties": false
+    }
+  }
+}

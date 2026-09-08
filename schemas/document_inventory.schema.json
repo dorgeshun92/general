@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mpire.local/schemas/document_inventory.schema.json",
+  "title": "Document inventory",
+  "description": "Output of loan-file-intake: every file in the input directory, hashed, classified, and never modified.",
+  "type": "object",
+  "required": ["schema_version", "loan_id", "run_id", "generated_at", "input_directory", "manifest_sha256", "documents", "duplicates", "unreadable", "totals"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "type": "string", "const": "1.0" },
+    "loan_id": { "$ref": "common.defs.schema.json#/$defs/loan_id" },
+    "run_id": { "$ref": "common.defs.schema.json#/$defs/run_id" },
+    "generated_at": { "$ref": "common.defs.schema.json#/$defs/iso_datetime" },
+    "input_directory": { "type": "string", "minLength": 1 },
+    "manifest_sha256": { "$ref": "common.defs.schema.json#/$defs/sha256" },
+    "documents": { "type": "array", "items": { "$ref": "loan_file.schema.json#/$defs/document" } },
+    "duplicates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["document_id", "duplicate_of", "match_type"],
+        "properties": {
+          "document_id": { "$ref": "common.defs.schema.json#/$defs/document_id" },
+          "duplicate_of": { "$ref": "common.defs.schema.json#/$defs/document_id" },
+          "match_type": { "type": "string", "enum": ["IDENTICAL_HASH", "SAME_CONTENT_DIFFERENT_FILE", "LIKELY_DUPLICATE"] }
+        },
+        "additionalProperties": false
+      }
+    },
+    "unreadable": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["document_id", "reason"],
+        "properties": {
+          "document_id": { "$ref": "common.defs.schema.json#/$defs/document_id" },
+          "reason": { "type": "string", "enum": ["ENCRYPTED", "CORRUPT", "UNSUPPORTED_FORMAT", "NO_TEXT_LAYER", "EMPTY"] },
+          "detail": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "totals": {
+      "type": "object",
+      "required": ["files", "pages", "bytes"],
+      "properties": {
+        "files": { "type": "integer", "minimum": 0 },
+        "pages": { "type": "integer", "minimum": 0 },
+        "bytes": { "type": "integer", "minimum": 0 }
+      },
+      "additionalProperties": false
+    }
+  }
+}

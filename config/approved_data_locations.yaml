@@ -1,0 +1,11 @@
+# Directories the read-only MVP is allowed to read loan packages from.
+# Anything outside these roots is refused by loan-file-intake and the
+# master orchestrator. Paths are relative to the repository root.
+#
+# Every loan directory under an approved root must contain MANIFEST.yaml with
+# `deidentified: true`, `deidentified_by`, and `deidentified_at`.
+approved_input_roots:
+  - tests/fixtures/deidentified
+# Only derived data may be written, and only here:
+approved_output_roots:
+  - output
