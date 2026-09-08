@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "mpire-audit": {
+      "command": "python",
+      "args": ["-m", "mcp_server"],
+      "env": {
+        "MPIRE_REPO_BACKEND": "memory"
+      }
+    }
+  }
+}

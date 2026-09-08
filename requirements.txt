@@ -1,4 +1,4 @@
-# Runtime + test dependencies for the read-only MVP. No network clients, no LOS SDKs.
+# Runtime + test dependencies. httpx is used only for Supabase (the system datastore); no LOS SDKs.
 jsonschema>=4.23
 referencing>=0.35
 PyYAML>=6.0

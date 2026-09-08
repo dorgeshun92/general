@@ -1,4 +1,4 @@
-"""Build the configured repository. api/ and mcp_server/ call get_repository(); tests build InMemoryRepository directly."""
+"""Build the configured repository. api/ and mcp_server/ call build_repository() or build_user_repository(); tests build InMemoryRepository directly."""
 from __future__ import annotations
 
 from typing import Optional
