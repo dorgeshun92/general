@@ -1,0 +1,5 @@
+loan_id: LN-EDGE-ENCRYPTED
+deidentified: true
+deidentified_by: "fixture generator"
+deidentified_at: "2026-09-08"
+description: "A password-protected PDF the tooling must report as ENCRYPTED without trying passwords"

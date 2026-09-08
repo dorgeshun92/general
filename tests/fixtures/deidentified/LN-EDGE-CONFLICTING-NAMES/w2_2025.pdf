@@ -1,0 +1,48 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [4 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Length 370 >>
+stream
+BT
+/F1 11 Tf
+50 750 Td
+14 TL
+(Form W-2 Wage and Tax Statement 2025) Tj T*
+(SYNTHETIC TEST DOCUMENT - NOT A REAL BORROWER, EMPLOYER, OR ACCOUNT) Tj T*
+(Employee's name: Test Borrower Alpha) Tj T*
+(Employee SSN: ***-**-0000) Tj T*
+(Employer: Synthetic Widgets LLC) Tj T*
+(Wages, tips, other compensation: $48,500.00) Tj T*
+(Federal income tax withheld: $5,120.00) Tj T*
+ET
+endstream
+endobj
+4 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 3 0 R >>
+endobj
+5 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+6 0 obj
+<< /Producer (mpire-fixture-generator) >>
+endobj
+xref
+0 7
+0000000000 65535 f 
+0000000015 00000 n 
+0000000085 00000 n 
+0000000142 00000 n 
+0000000563 00000 n 
+0000000689 00000 n 
+0000000738 00000 n 
+trailer
+<< /Size 7 /Root 5 0 R /Info 6 0 R >>
+startxref
+795
+%%EOF

@@ -1,0 +1,51 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [4 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Length 391 >>
+stream
+BT
+/F1 11 Tf
+50 750 Td
+14 TL
+(EARNINGS STATEMENT) Tj T*
+(SYNTHETIC TEST DOCUMENT - NOT A REAL BORROWER, EMPLOYER, OR ACCOUNT) Tj T*
+(Employer: Synthetic Widgets LLC) Tj T*
+(Employee: Test Borrower Clean) Tj T*
+(Pay Period: 08/01/2026 - 08/15/2026) Tj T*
+(Pay Date: 08/20/2026) Tj T*
+(Gross Pay: $3,250.00) Tj T*
+(Net Pay: $2,410.55) Tj T*
+(YTD Gross: $52,000.00) Tj T*
+(Page 1 of 1) Tj T*
+ET
+endstream
+endobj
+4 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 3 0 R >>
+endobj
+5 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+6 0 obj
+<< /Producer (mpire-fixture-generator) >>
+endobj
+xref
+0 7
+0000000000 65535 f 
+0000000015 00000 n 
+0000000085 00000 n 
+0000000142 00000 n 
+0000000584 00000 n 
+0000000710 00000 n 
+0000000759 00000 n 
+trailer
+<< /Size 7 /Root 5 0 R /Info 6 0 R >>
+startxref
+816
+%%EOF

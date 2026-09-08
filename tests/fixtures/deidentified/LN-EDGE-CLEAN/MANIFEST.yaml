@@ -1,0 +1,10 @@
+loan_id: LN-EDGE-CLEAN
+deidentified: true
+deidentified_by: "fixture generator"
+deidentified_at: "2026-09-08"
+description: "Small clean synthetic package: 1003, paystub, W2, bank statement, purchase contract"
+# Literal tokens the live-PII heuristic may ignore. Every value is a fake number
+# placed by the fixture generator; a human vouches for it by keeping it here.
+pii_pattern_allowlist:
+  - "12345678"
+  - "87654321"

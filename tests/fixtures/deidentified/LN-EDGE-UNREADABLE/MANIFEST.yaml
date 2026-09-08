@@ -1,0 +1,5 @@
+loan_id: LN-EDGE-UNREADABLE
+deidentified: true
+deidentified_by: "fixture generator"
+deidentified_at: "2026-09-08"
+description: "Garbage bytes with a .pdf extension, an empty .pdf, a scan with no text layer, a .txt"

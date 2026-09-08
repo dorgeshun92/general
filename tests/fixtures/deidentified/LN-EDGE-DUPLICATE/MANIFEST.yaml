@@ -1,0 +1,5 @@
+loan_id: LN-EDGE-DUPLICATE
+deidentified: true
+deidentified_by: "fixture generator"
+deidentified_at: "2026-09-08"
+description: "Same paystub three times: identical bytes twice, plus a same-text-different-bytes copy"

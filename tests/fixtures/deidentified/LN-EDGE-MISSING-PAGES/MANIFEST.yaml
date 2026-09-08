@@ -1,0 +1,5 @@
+loan_id: LN-EDGE-MISSING-PAGES
+deidentified: true
+deidentified_by: "fixture generator"
+deidentified_at: "2026-09-08"
+description: "A bank statement whose footer says 'Page 1 of 3' but only two pages exist"

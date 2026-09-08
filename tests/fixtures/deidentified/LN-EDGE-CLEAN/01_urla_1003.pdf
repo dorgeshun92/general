@@ -1,0 +1,66 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [4 0 R 6 0 R] /Count 2 >>
+endobj
+3 0 obj
+<< /Length 334 >>
+stream
+BT
+/F1 11 Tf
+50 750 Td
+14 TL
+(Uniform Residential Loan Application \(Form 1003\)) Tj T*
+(SYNTHETIC TEST DOCUMENT - NOT A REAL BORROWER, EMPLOYER, OR ACCOUNT) Tj T*
+(Borrower Name: Test Borrower Clean) Tj T*
+(Loan Purpose: Purchase) Tj T*
+(Occupancy: Primary Residence) Tj T*
+(Application Date: 08/15/2026) Tj T*
+(Page 1 of 2) Tj T*
+ET
+endstream
+endobj
+4 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 3 0 R >>
+endobj
+5 0 obj
+<< /Length 166 >>
+stream
+BT
+/F1 11 Tf
+50 750 Td
+14 TL
+(Section 2: Financial Information - Assets and Liabilities) Tj T*
+(Section 4: Loan and Property Information) Tj T*
+(Page 2 of 2) Tj T*
+ET
+endstream
+endobj
+6 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 5 0 R >>
+endobj
+7 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+8 0 obj
+<< /Producer (mpire-fixture-generator) >>
+endobj
+xref
+0 9
+0000000000 65535 f 
+0000000015 00000 n 
+0000000085 00000 n 
+0000000148 00000 n 
+0000000533 00000 n 
+0000000659 00000 n 
+0000000876 00000 n 
+0000001002 00000 n 
+0000001051 00000 n 
+trailer
+<< /Size 9 /Root 7 0 R /Info 8 0 R >>
+startxref
+1108
+%%EOF
