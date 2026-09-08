@@ -1,0 +1,126 @@
+{
+  "schema_version": "1.0",
+  "loan_id": "LN-EXAMPLE-0001",
+  "run_id": "RUN-EXAMPLE-0001",
+  "audit_type": "SUBMISSION_READINESS",
+  "generated_at": "2026-09-08T12:00:00Z",
+  "generated_by": {
+    "skill": "submission-readiness",
+    "tool_versions": {
+      "python": "3.11"
+    }
+  },
+  "inputs": [
+    {
+      "path": "output/LN-EXAMPLE-0001/loan_file.json",
+      "sha256": "5ee1bf99167a25356c890d03533ff16c60f495718b0f00539377999b0bf4f456",
+      "role": "loan_file"
+    },
+    {
+      "path": "output/LN-EXAMPLE-0001/document_inventory.json",
+      "sha256": "71a3e4bd3921d73f7420a1e05acf0749553210adca8edfd44027f5a4ed9550ed",
+      "role": "document_inventory"
+    }
+  ],
+  "catalog": {
+    "path": "tests/fixtures/examples/checklist_catalog.valid.yaml",
+    "sha256": "6b790d0f4b901f2e308c9150eb18572dd89494c9dc83974dcd2f5627aa63a3ea",
+    "version": "0.1.0"
+  },
+  "overall_status": "READY",
+  "findings": [
+    {
+      "finding_id": "F-001",
+      "rule_id": "SUB-EXAMPLE-001",
+      "result": "PASS",
+      "evidence_ids": [
+        "EV-002"
+      ],
+      "explanation": "1003 loan amount 400000.00 is present and cited.",
+      "discrepancy": null,
+      "proposed_action": null,
+      "blocking": true,
+      "reviewer_role": null,
+      "confidence": "HIGH",
+      "review_reason": null,
+      "calculation": null,
+      "guideline_source": null
+    },
+    {
+      "finding_id": "F-002",
+      "rule_id": "SUB-EXAMPLE-002",
+      "result": "PASS",
+      "evidence_ids": [
+        "EV-006"
+      ],
+      "explanation": "Bank statement ending balance 48210.55 is present and cited.",
+      "discrepancy": null,
+      "proposed_action": null,
+      "blocking": true,
+      "reviewer_role": null,
+      "confidence": "HIGH",
+      "review_reason": null,
+      "calculation": null,
+      "guideline_source": null
+    },
+    {
+      "finding_id": "F-003",
+      "rule_id": "SUB-EXAMPLE-003",
+      "result": "NOT_APPLICABLE",
+      "evidence_ids": [
+        "EV-001"
+      ],
+      "explanation": "Placeholder refinance-only item; purpose is Purchase.",
+      "discrepancy": null,
+      "proposed_action": null,
+      "blocking": true,
+      "reviewer_role": null,
+      "confidence": "HIGH",
+      "review_reason": null,
+      "calculation": null,
+      "guideline_source": null
+    },
+    {
+      "finding_id": "F-004",
+      "rule_id": "SUB-EXAMPLE-004",
+      "result": "REVIEW",
+      "evidence_ids": [
+        "EV-007"
+      ],
+      "explanation": "Advisory placeholder: deposit description extracted at LOW confidence.",
+      "discrepancy": null,
+      "proposed_action": null,
+      "blocking": false,
+      "reviewer_role": "PROCESSOR",
+      "confidence": "LOW",
+      "review_reason": "Human confirmation of the OCR-read deposit description.",
+      "calculation": null,
+      "guideline_source": null
+    }
+  ],
+  "summary": {
+    "counts": {
+      "PASS": 3,
+      "FAIL": 0,
+      "MISSING": 0,
+      "REVIEW": 1,
+      "NOT_APPLICABLE": 1
+    },
+    "blocking_open": 0,
+    "coverage": {
+      "catalog_items_in_phase": 4,
+      "items_evaluated": 4,
+      "coverage_percent": "100.0",
+      "unevaluated_rule_ids": []
+    }
+  },
+  "missing_documents": [],
+  "conflicts": [],
+  "approvals_required": [],
+  "known_limitations": [
+    "EXAMPLE FIXTURE: rule ids reference placeholder catalog items, not real checklist rules.",
+    "Commission, bonus, overtime, rental, self-employed, and asset-depletion income are not evaluated in this release.",
+    "No guideline lookups were performed; nothing here is a credit or compliance decision."
+  ],
+  "los_export_present": true
+}

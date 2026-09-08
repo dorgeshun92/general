@@ -1,0 +1,158 @@
+{
+  "schema_version": "1.0",
+  "loan_id": "LN-EXAMPLE-0001",
+  "run_id": "RUN-EXAMPLE-0001",
+  "generated_at": "2026-09-08T12:00:00Z",
+  "input_directory": "tests/fixtures/deidentified/example-0001",
+  "manifest_sha256": "c0f1b839df46ebbff27030e73b3a27e83585dea9831c4562b62b5b4c90587fe8",
+  "documents": [
+    {
+      "document_id": "DOC-001",
+      "filename": "urla_1003_example.pdf",
+      "relative_path": "urla_1003_example.pdf",
+      "sha256": "not-a-sha256-hash",
+      "size_bytes": 184320,
+      "document_type": "URLA_1003",
+      "classification_confidence": "HIGH",
+      "page_count": 9,
+      "status": "OK",
+      "duplicate_of": null,
+      "document_date": "2026-08-20",
+      "extraction_method": "TEXT_LAYER",
+      "borrower_names_found": [
+        "Test Borrower Alpha",
+        "Test Borrower Beta"
+      ]
+    },
+    {
+      "document_id": "DOC-002",
+      "filename": "paystub_alpha_2026-08-15.pdf",
+      "relative_path": "paystub_alpha_2026-08-15.pdf",
+      "sha256": "5d901a5db7a335449cfc4b255cefffaacb38115f8a9cc7428942556cd7acf1d0",
+      "size_bytes": 40960,
+      "document_type": "PAYSTUB",
+      "classification_confidence": "HIGH",
+      "page_count": 1,
+      "status": "OK",
+      "duplicate_of": null,
+      "document_date": "2026-08-15",
+      "extraction_method": "TEXT_LAYER",
+      "borrower_names_found": [
+        "Test Borrower Alpha"
+      ],
+      "statement_period": {
+        "start": "2026-08-01",
+        "end": "2026-08-15"
+      }
+    },
+    {
+      "document_id": "DOC-003",
+      "filename": "bank_statement_example_2026-07.pdf",
+      "relative_path": "bank_statement_example_2026-07.pdf",
+      "sha256": "09be7236ffa829bc200e658e0e4fa9dd5bd54f3f6b2c527728317c509e63edcd",
+      "size_bytes": 122880,
+      "document_type": "BANK_STATEMENT",
+      "classification_confidence": "MEDIUM",
+      "page_count": 4,
+      "status": "OK",
+      "duplicate_of": null,
+      "document_date": "2026-07-31",
+      "extraction_method": "OCR",
+      "borrower_names_found": [
+        "Test Borrower Alpha",
+        "Test Borrower Beta"
+      ],
+      "statement_period": {
+        "start": "2026-07-01",
+        "end": "2026-07-31"
+      },
+      "masked_account_numbers_found": [
+        "****1234"
+      ],
+      "notes": "Page 2 deposit descriptions came from OCR with low confidence; see RV-001."
+    },
+    {
+      "document_id": "DOC-004",
+      "filename": "purchase_contract_example.pdf",
+      "relative_path": "purchase_contract_example.pdf",
+      "sha256": "713dcf64aa070869725340b562e7350fb8c007d4acec574fa87fa57a964bb72d",
+      "size_bytes": 512000,
+      "document_type": "PURCHASE_CONTRACT",
+      "classification_confidence": "HIGH",
+      "page_count": 12,
+      "status": "OK",
+      "duplicate_of": null,
+      "document_date": "2026-09-01",
+      "extraction_method": "TEXT_LAYER",
+      "borrower_names_found": [
+        "Test Borrower Alpha",
+        "Test Borrower Beta"
+      ]
+    },
+    {
+      "document_id": "DOC-005",
+      "filename": "credit_report_example.pdf",
+      "relative_path": "credit_report_example.pdf",
+      "sha256": "24ab7c9779d7ba43e7fd3d46d03fa11851662d7db232ae10a661be621bdb3b06",
+      "size_bytes": 98304,
+      "document_type": "CREDIT_REPORT",
+      "classification_confidence": "HIGH",
+      "page_count": 6,
+      "status": "OK",
+      "duplicate_of": null,
+      "document_date": "2026-08-18",
+      "extraction_method": "TEXT_LAYER",
+      "borrower_names_found": [
+        "Test Borrower Alpha",
+        "Test Borrower Beta"
+      ]
+    },
+    {
+      "document_id": "DOC-006",
+      "filename": "bank_statement_example_2026-07 (1).pdf",
+      "relative_path": "bank_statement_example_2026-07 (1).pdf",
+      "sha256": "09be7236ffa829bc200e658e0e4fa9dd5bd54f3f6b2c527728317c509e63edcd",
+      "size_bytes": 122880,
+      "document_type": "BANK_STATEMENT",
+      "classification_confidence": "MEDIUM",
+      "page_count": 4,
+      "status": "DUPLICATE",
+      "duplicate_of": "DOC-003",
+      "document_date": "2026-07-31",
+      "extraction_method": "OCR"
+    },
+    {
+      "document_id": "DOC-007",
+      "filename": "encrypted_upload_example.pdf",
+      "relative_path": "encrypted_upload_example.pdf",
+      "sha256": "8d29b4b700cbfd42a93a078c85e7b8f22714b85b4a76d484368b8d97778872cc",
+      "size_bytes": 20480,
+      "document_type": "UNKNOWN",
+      "classification_confidence": "LOW",
+      "page_count": null,
+      "status": "ENCRYPTED",
+      "duplicate_of": null,
+      "document_date": null,
+      "notes": "Password-protected; not opened."
+    }
+  ],
+  "duplicates": [
+    {
+      "document_id": "DOC-006",
+      "duplicate_of": "DOC-003",
+      "match_type": "IDENTICAL_HASH"
+    }
+  ],
+  "unreadable": [
+    {
+      "document_id": "DOC-007",
+      "reason": "ENCRYPTED",
+      "detail": "PDF requires a password; no attempt was made to open it."
+    }
+  ],
+  "totals": {
+    "files": 7,
+    "pages": 36,
+    "bytes": 1101824
+  }
+}

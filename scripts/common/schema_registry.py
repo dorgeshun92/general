@@ -60,12 +60,17 @@ def get_validator(name: str) -> Draft202012Validator:
 
 
 def validate_document(data: Any, name: str) -> list[str]:
-    """Return a list of error strings. Empty list means the document is valid."""
+    """Return a list of error strings (schema errors, else integrity errors). Empty list means valid."""
     validator = get_validator(name)
     errors = []
     for err in sorted(validator.iter_errors(data), key=lambda e: list(e.absolute_path)):
         pointer = "/" + "/".join(str(p) for p in err.absolute_path)
         errors.append(f"{pointer}: {err.message}")
+    if not errors:
+        # Cross-reference checks JSON Schema cannot express (dangling ids, count mismatches, READY gating).
+        from scripts.common.integrity import integrity_errors  # local import: keeps this module dependency-free
+
+        errors = integrity_errors(data, name)
     return errors
 
 

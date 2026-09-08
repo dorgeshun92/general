@@ -1,0 +1,80 @@
+# EXAMPLE checklist catalog for schema testing only.
+# Every item below is a placeholder. None of these statements is a mortgage
+# guideline or an operative checklist rule, and none may be copied into
+# config/checklist_catalog.yaml. Real items come only from registered source
+# checklists with verbatim wording and page traceability.
+catalog_version: "0.1.0"
+normalized_at: null
+reviewed_by: null
+reviewed_at: null
+
+sources:
+  - source_id: SRC-EXAMPLE
+    title: "EXAMPLE SOURCE (not a real checklist)"
+    filename: example_source_placeholder.pdf
+    sha256: 8f51ea9926ecda4a2b6f2e4f7ef1b8db172b2ed34dd9a42f92ef3102213854b3
+    page_count: 3
+    version_or_date: null
+
+items:
+  - id: PRE-EXAMPLE-001
+    source_document: SRC-EXAMPLE
+    source_page: 1
+    source_text: "EXAMPLE ITEM 1 — placeholder statement for schema testing, not a checklist rule"
+    phase: PREAPPROVAL
+    category: OTHER
+    applies_when: always
+    required_evidence:
+      - "EXAMPLE EVIDENCE — placeholder document description"
+    fields_to_compare: []
+    evaluation_method: deterministic
+    result_values: [PASS, FAIL, MISSING, REVIEW]
+    blocking_if_failed: true
+    proposed_action: "EXAMPLE ACTION — placeholder draft action text"
+    required_human_role: null
+
+  - id: PRE-EXAMPLE-002
+    source_document: SRC-EXAMPLE
+    source_page: 2
+    source_text: "EXAMPLE ITEM 2 — placeholder statement for schema testing, not a checklist rule"
+    phase: PREAPPROVAL
+    category: OTHER
+    applies_when: "EXAMPLE CONDITION — placeholder applicability condition"
+    required_evidence:
+      - "EXAMPLE EVIDENCE — placeholder document description"
+      - "EXAMPLE EVIDENCE — second placeholder document description"
+    fields_to_compare:
+      - example.field_a
+      - example.field_b
+    evaluation_method: human_judgment
+    result_values: [PASS, FAIL, MISSING, REVIEW, NOT_APPLICABLE]
+    blocking_if_failed: false
+    proposed_action: "EXAMPLE ACTION — placeholder draft action text"
+    required_human_role: UNDERWRITER
+    ambiguous: true
+    notes: "Marked ambiguous to exercise the rule that ambiguous items must allow REVIEW."
+
+  - id: PRE-EXAMPLE-001
+    source_document: SRC-EXAMPLE
+    source_page: 3
+    source_text: "EXAMPLE ITEM 3 — placeholder statement for schema testing, not a checklist rule"
+    phase: SUBMISSION
+    category: OTHER
+    applies_when: always
+    required_evidence:
+      - "EXAMPLE EVIDENCE — placeholder document description"
+    fields_to_compare: []
+    evaluation_method: guideline_lookup
+    result_values: [PASS, FAIL, MISSING, REVIEW]
+    blocking_if_failed: true
+    proposed_action: "EXAMPLE ACTION — placeholder draft action text"
+    required_human_role: PROCESSOR
+
+conflicts:
+  - conflict_id: CAT-CF-001
+    rule_ids: [PRE-EXAMPLE-001, PRE-EXAMPLE-002]
+    description: "EXAMPLE CONFLICT — placeholder; both items stay in force until a reviewer resolves it."
+    resolution: null
+    resolved_by: null
+
+consolidation_decisions: []

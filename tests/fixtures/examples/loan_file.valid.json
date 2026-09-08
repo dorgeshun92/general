@@ -1,0 +1,850 @@
+{
+  "schema_version": "1.0",
+  "loan_id": "LN-EXAMPLE-0001",
+  "generated_at": "2026-09-08T12:00:00Z",
+  "generated_by": {
+    "skill": "loan-file-intake",
+    "run_id": "RUN-EXAMPLE-0001",
+    "tool_versions": {
+      "python": "3.11",
+      "pypdf": "example"
+    }
+  },
+  "source": {
+    "input_directory": "tests/fixtures/deidentified/example-0001",
+    "deidentified": true,
+    "manifest_sha256": "c0f1b839df46ebbff27030e73b3a27e83585dea9831c4562b62b5b4c90587fe8"
+  },
+  "loan": {
+    "purpose": {
+      "value": "PURCHASE",
+      "evidence_ids": [
+        "EV-001"
+      ],
+      "confidence": "HIGH"
+    },
+    "occupancy": {
+      "value": "PRIMARY",
+      "evidence_ids": [
+        "EV-001"
+      ],
+      "confidence": "HIGH"
+    },
+    "product_family": {
+      "value": "CONVENTIONAL",
+      "evidence_ids": [
+        "EV-001"
+      ],
+      "confidence": "HIGH"
+    },
+    "lender": {
+      "value": null,
+      "evidence_ids": [],
+      "confidence": "LOW",
+      "status": "UNKNOWN",
+      "note": "No lender is named in the fixture documents (honest-unknown example)."
+    },
+    "loan_amount": {
+      "value": "400000.00",
+      "evidence_ids": [
+        "EV-002"
+      ],
+      "confidence": "HIGH"
+    },
+    "closing_date": {
+      "value": "2026-10-15",
+      "evidence_ids": [
+        "EV-009"
+      ],
+      "confidence": "HIGH"
+    },
+    "status": {
+      "value": "Application",
+      "evidence_ids": [
+        "EV-001"
+      ],
+      "confidence": "MEDIUM"
+    },
+    "rate_lock_expiration": {
+      "value": null,
+      "evidence_ids": [],
+      "confidence": "LOW",
+      "status": "UNKNOWN",
+      "note": "No rate lock document in the fixture."
+    }
+  },
+  "borrowers": [
+    {
+      "borrower_id": "B-1",
+      "role": "BORROWER",
+      "full_name": {
+        "value": "Test Borrower Alpha",
+        "evidence_ids": [
+          "EV-003"
+        ],
+        "confidence": "HIGH"
+      },
+      "aliases": [],
+      "ssn_last4": "0001",
+      "citizenship_status": {
+        "value": "US_CITIZEN",
+        "evidence_ids": [
+          "EV-003"
+        ],
+        "confidence": "HIGH"
+      },
+      "residence_history": [
+        {
+          "address": {
+            "street": "456 Sample Avenue",
+            "unit": null,
+            "city": "Testville",
+            "state": "CA",
+            "postal_code": "90002"
+          },
+          "period": {
+            "start": "2021-06-01",
+            "end": null
+          },
+          "tenure": "OWN",
+          "monthly_payment": "2150.00",
+          "evidence_ids": [
+            "EV-003"
+          ]
+        }
+      ],
+      "employment_history": [
+        {
+          "employer": "Example Employer LLC",
+          "position": "Analyst",
+          "period": {
+            "start": "2022-03-01",
+            "end": null
+          },
+          "self_employed": false,
+          "employment_type": "CURRENT_PRIMARY",
+          "evidence_ids": [
+            "EV-005"
+          ]
+        }
+      ]
+    },
+    {
+      "borrower_id": "B-2",
+      "role": "CO_BORROWER",
+      "full_name": {
+        "value": "Test Borrower Beta",
+        "evidence_ids": [
+          "EV-003"
+        ],
+        "confidence": "HIGH"
+      },
+      "aliases": [],
+      "ssn_last4": null,
+      "citizenship_status": {
+        "value": null,
+        "evidence_ids": [],
+        "confidence": "LOW",
+        "status": "UNKNOWN",
+        "note": "Co-borrower citizenship box not completed on the 1003."
+      },
+      "residence_history": [
+        {
+          "address": {
+            "street": "456 Sample Avenue",
+            "unit": null,
+            "city": "Testville",
+            "state": "CA",
+            "postal_code": "90002"
+          },
+          "period": {
+            "start": "2021-06-01",
+            "end": null
+          },
+          "tenure": "OWN",
+          "monthly_payment": "2150.00",
+          "evidence_ids": [
+            "EV-003"
+          ]
+        }
+      ],
+      "employment_history": []
+    }
+  ],
+  "income": [
+    {
+      "income_id": "INC-001",
+      "borrower_id": "B-1",
+      "type": "SALARY",
+      "source_name": "Example Employer LLC",
+      "period": {
+        "start": "2026-08-01",
+        "end": "2026-08-15"
+      },
+      "document_ids": [
+        "DOC-002"
+      ],
+      "stated_monthly_amount_1003": {
+        "value": null,
+        "evidence_ids": [],
+        "confidence": "LOW",
+        "status": "UNKNOWN",
+        "note": "1003 income section not extracted in this example."
+      },
+      "calculated_monthly_amount": "6500.00",
+      "calculation": {
+        "method": "salaried_monthly_base",
+        "method_version": "1.0",
+        "inputs": {
+          "gross_pay_period": "3250.00",
+          "pay_frequency": "SEMI_MONTHLY",
+          "periods_per_year": 24
+        },
+        "formula": "gross_pay_period * periods_per_year / 12",
+        "intermediate_values": {
+          "annual_base": "78000.00"
+        },
+        "output": "6500.00",
+        "warnings": [],
+        "rounding_policy": "ROUND_HALF_UP to 2 decimal places"
+      },
+      "used_to_qualify": true,
+      "potential_additional_income": false,
+      "confidence": "HIGH",
+      "evidence_ids": [
+        "EV-005"
+      ]
+    }
+  ],
+  "assets": [
+    {
+      "asset_id": "AST-001",
+      "owner_borrower_ids": [
+        "B-1",
+        "B-2"
+      ],
+      "institution": {
+        "value": "Example Bank",
+        "evidence_ids": [
+          "EV-006"
+        ],
+        "confidence": "HIGH"
+      },
+      "account_number_masked": "****1234",
+      "account_type": "CHECKING",
+      "statement_period": {
+        "start": "2026-07-01",
+        "end": "2026-07-31"
+      },
+      "beginning_balance": {
+        "value": null,
+        "evidence_ids": [],
+        "confidence": "LOW",
+        "status": "UNKNOWN",
+        "note": "Beginning balance line not captured by OCR."
+      },
+      "ending_balance": {
+        "value": "48210.55",
+        "evidence_ids": [
+          "EV-006"
+        ],
+        "confidence": "HIGH"
+      },
+      "large_deposits": [
+        {
+          "date": "2026-07-18",
+          "amount": "12000.00",
+          "description": "MOBILE DEPOSIT",
+          "sourced": null,
+          "evidence_ids": [
+            "EV-007"
+          ]
+        }
+      ],
+      "usable_amount": "36210.55",
+      "usable_amount_calculation": {
+        "method": "statement_balance_less_unsourced_deposits",
+        "method_version": "1.0",
+        "inputs": {
+          "ending_balance": "48210.55",
+          "unsourced_deposits": [
+            "12000.00"
+          ]
+        },
+        "formula": "ending_balance - sum(unsourced_deposits)",
+        "intermediate_values": {
+          "unsourced_total": "12000.00"
+        },
+        "output": "36210.55",
+        "warnings": [
+          "Deposit of 12000.00 on 2026-07-18 is unsourced; excluded until documented."
+        ],
+        "rounding_policy": "ROUND_HALF_UP to 2 decimal places"
+      },
+      "document_ids": [
+        "DOC-003"
+      ]
+    }
+  ],
+  "liabilities": [
+    {
+      "liability_id": "LIA-001",
+      "borrower_ids": [
+        "B-1"
+      ],
+      "creditor": "Example Auto Finance",
+      "type": "INSTALLMENT",
+      "balance": {
+        "value": "18400.00",
+        "evidence_ids": [
+          "EV-010"
+        ],
+        "confidence": "HIGH"
+      },
+      "monthly_payment": {
+        "value": "415.00",
+        "evidence_ids": [
+          "EV-010"
+        ],
+        "confidence": "HIGH"
+      },
+      "source": "CREDIT_REPORT",
+      "excluded": false,
+      "exclusion_reason": null,
+      "payoff_status": "REMAINS",
+      "evidence_ids": [
+        "EV-010"
+      ]
+    },
+    {
+      "liability_id": "LIA-002",
+      "borrower_ids": [
+        "B-1",
+        "B-2"
+      ],
+      "creditor": "Example Mortgage Servicer",
+      "type": "MORTGAGE",
+      "balance": {
+        "value": "312000.00",
+        "evidence_ids": [
+          "EV-004"
+        ],
+        "confidence": "HIGH"
+      },
+      "monthly_payment": {
+        "value": "2150.00",
+        "evidence_ids": [
+          "EV-004"
+        ],
+        "confidence": "HIGH"
+      },
+      "source": "CREDIT_REPORT",
+      "excluded": false,
+      "exclusion_reason": null,
+      "payoff_status": "REMAINS",
+      "evidence_ids": [
+        "EV-004"
+      ]
+    }
+  ],
+  "properties": [
+    {
+      "property_id": "PROP-001",
+      "role": "SUBJECT",
+      "owner_borrower_ids": [],
+      "address": {
+        "street": "123 Example Street",
+        "unit": null,
+        "city": "Testville",
+        "state": "CA",
+        "postal_code": "90001"
+      },
+      "property_type": "SFR",
+      "taxes_monthly": {
+        "value": null,
+        "evidence_ids": [],
+        "confidence": "LOW",
+        "status": "UNKNOWN",
+        "note": "No tax bill or appraisal in the fixture."
+      },
+      "insurance_monthly": {
+        "value": null,
+        "evidence_ids": [],
+        "confidence": "LOW",
+        "status": "UNKNOWN",
+        "note": "No insurance quote in the fixture."
+      },
+      "hoa_monthly": {
+        "value": null,
+        "evidence_ids": [],
+        "confidence": "LOW",
+        "status": "UNKNOWN",
+        "note": "HOA status not stated in the contract pages extracted."
+      },
+      "mortgages": [],
+      "rent_monthly": {
+        "value": null,
+        "evidence_ids": [],
+        "confidence": "LOW",
+        "status": "UNKNOWN",
+        "note": "Not applicable to a primary-residence purchase; left null."
+      },
+      "solar": {
+        "present": null,
+        "arrangement": null,
+        "monthly_payment": null,
+        "evidence_ids": []
+      },
+      "condo_status": "NOT_CONDO",
+      "evidence_ids": [
+        "EV-008"
+      ]
+    },
+    {
+      "property_id": "PROP-002",
+      "role": "REO",
+      "owner_borrower_ids": [
+        "B-1",
+        "B-2"
+      ],
+      "address": {
+        "street": "456 Sample Avenue",
+        "unit": null,
+        "city": "Testville",
+        "state": "CA",
+        "postal_code": "90002"
+      },
+      "property_type": "SFR",
+      "taxes_monthly": {
+        "value": null,
+        "evidence_ids": [],
+        "confidence": "LOW",
+        "status": "UNKNOWN",
+        "note": "No tax bill for the REO in the fixture."
+      },
+      "insurance_monthly": {
+        "value": null,
+        "evidence_ids": [],
+        "confidence": "LOW",
+        "status": "UNKNOWN",
+        "note": "No insurance declaration for the REO in the fixture."
+      },
+      "hoa_monthly": {
+        "value": null,
+        "evidence_ids": [],
+        "confidence": "LOW",
+        "status": "UNKNOWN",
+        "note": "Not stated."
+      },
+      "mortgages": [
+        {
+          "liability_id": "LIA-002",
+          "lender": "Example Mortgage Servicer",
+          "balance": "312000.00",
+          "monthly_payment": "2150.00",
+          "includes_escrow": null,
+          "evidence_ids": [
+            "EV-004"
+          ]
+        }
+      ],
+      "rent_monthly": {
+        "value": null,
+        "evidence_ids": [],
+        "confidence": "LOW",
+        "status": "UNKNOWN",
+        "note": "Property is owner-occupied per the 1003 residence history; no lease."
+      },
+      "solar": {
+        "present": null,
+        "arrangement": null,
+        "monthly_payment": null,
+        "evidence_ids": []
+      },
+      "condo_status": "NOT_CONDO",
+      "evidence_ids": [
+        "EV-003",
+        "EV-004"
+      ]
+    }
+  ],
+  "contract": {
+    "document_ids": [
+      "DOC-004"
+    ],
+    "purchase_price": {
+      "value": "500000.00",
+      "evidence_ids": [
+        "EV-008"
+      ],
+      "confidence": "HIGH"
+    },
+    "earnest_money": {
+      "value": "10000.00",
+      "evidence_ids": [
+        "EV-008"
+      ],
+      "confidence": "HIGH"
+    },
+    "seller_concessions": {
+      "value": null,
+      "evidence_ids": [],
+      "confidence": "LOW",
+      "status": "UNKNOWN",
+      "note": "No concessions clause found on the pages extracted."
+    },
+    "dates": {
+      "contract_date": {
+        "value": "2026-09-01",
+        "evidence_ids": [
+          "EV-009"
+        ],
+        "confidence": "HIGH"
+      },
+      "closing_date": {
+        "value": "2026-10-15",
+        "evidence_ids": [
+          "EV-009"
+        ],
+        "confidence": "HIGH"
+      },
+      "financing_contingency": {
+        "value": null,
+        "evidence_ids": [],
+        "confidence": "LOW",
+        "status": "UNKNOWN",
+        "note": "Not stated in any fixture document; left null rather than inferred."
+      },
+      "appraisal_contingency": {
+        "value": null,
+        "evidence_ids": [],
+        "confidence": "LOW",
+        "status": "UNKNOWN",
+        "note": "Not stated in any fixture document; left null rather than inferred."
+      },
+      "inspection_contingency": {
+        "value": null,
+        "evidence_ids": [],
+        "confidence": "LOW",
+        "status": "UNKNOWN",
+        "note": "Not stated in any fixture document; left null rather than inferred."
+      }
+    },
+    "parties": {
+      "buyers": [
+        {
+          "value": "Test Borrower Alpha",
+          "evidence_ids": [
+            "EV-008"
+          ],
+          "confidence": "HIGH"
+        },
+        {
+          "value": "Test Borrower Beta",
+          "evidence_ids": [
+            "EV-008"
+          ],
+          "confidence": "HIGH"
+        }
+      ],
+      "sellers": [
+        {
+          "value": "Test Seller Gamma",
+          "evidence_ids": [
+            "EV-008"
+          ],
+          "confidence": "HIGH"
+        }
+      ],
+      "listing_agent": {
+        "value": null,
+        "evidence_ids": [],
+        "confidence": "LOW",
+        "status": "UNKNOWN",
+        "note": "Not stated in any fixture document; left null rather than inferred."
+      },
+      "selling_agent": {
+        "value": null,
+        "evidence_ids": [],
+        "confidence": "LOW",
+        "status": "UNKNOWN",
+        "note": "Not stated in any fixture document; left null rather than inferred."
+      },
+      "title_or_escrow_company": {
+        "value": null,
+        "evidence_ids": [],
+        "confidence": "LOW",
+        "status": "UNKNOWN",
+        "note": "Not stated in any fixture document; left null rather than inferred."
+      }
+    },
+    "signatures": {
+      "all_buyers_signed": {
+        "value": null,
+        "evidence_ids": [],
+        "confidence": "LOW",
+        "status": "REVIEW",
+        "note": "Signature page (p.12) not yet reviewed by a human."
+      },
+      "all_sellers_signed": {
+        "value": null,
+        "evidence_ids": [],
+        "confidence": "LOW",
+        "status": "REVIEW",
+        "note": "Signature page (p.12) not yet reviewed by a human."
+      }
+    },
+    "addenda": [],
+    "personal_property": []
+  },
+  "documents": [
+    {
+      "document_id": "DOC-001",
+      "filename": "urla_1003_example.pdf",
+      "relative_path": "urla_1003_example.pdf",
+      "sha256": "f2cfba5f0f0fa32caf3ea404cc98a7f99590b359ebf7b7dd68c3424077340352",
+      "size_bytes": 184320,
+      "document_type": "URLA_1003",
+      "classification_confidence": "HIGH",
+      "page_count": 9,
+      "status": "OK",
+      "duplicate_of": null,
+      "document_date": "2026-08-20",
+      "extraction_method": "TEXT_LAYER",
+      "borrower_names_found": [
+        "Test Borrower Alpha",
+        "Test Borrower Beta"
+      ]
+    },
+    {
+      "document_id": "DOC-002",
+      "filename": "paystub_alpha_2026-08-15.pdf",
+      "relative_path": "paystub_alpha_2026-08-15.pdf",
+      "sha256": "5d901a5db7a335449cfc4b255cefffaacb38115f8a9cc7428942556cd7acf1d0",
+      "size_bytes": 40960,
+      "document_type": "PAYSTUB",
+      "classification_confidence": "HIGH",
+      "page_count": 1,
+      "status": "OK",
+      "duplicate_of": null,
+      "document_date": "2026-08-15",
+      "extraction_method": "TEXT_LAYER",
+      "borrower_names_found": [
+        "Test Borrower Alpha"
+      ],
+      "statement_period": {
+        "start": "2026-08-01",
+        "end": "2026-08-15"
+      }
+    },
+    {
+      "document_id": "DOC-003",
+      "filename": "bank_statement_example_2026-07.pdf",
+      "relative_path": "bank_statement_example_2026-07.pdf",
+      "sha256": "09be7236ffa829bc200e658e0e4fa9dd5bd54f3f6b2c527728317c509e63edcd",
+      "size_bytes": 122880,
+      "document_type": "BANK_STATEMENT",
+      "classification_confidence": "MEDIUM",
+      "page_count": 4,
+      "status": "OK",
+      "duplicate_of": null,
+      "document_date": "2026-07-31",
+      "extraction_method": "OCR",
+      "borrower_names_found": [
+        "Test Borrower Alpha",
+        "Test Borrower Beta"
+      ],
+      "statement_period": {
+        "start": "2026-07-01",
+        "end": "2026-07-31"
+      },
+      "masked_account_numbers_found": [
+        "****1234"
+      ],
+      "notes": "Page 2 deposit descriptions came from OCR with low confidence; see RV-001."
+    },
+    {
+      "document_id": "DOC-004",
+      "filename": "purchase_contract_example.pdf",
+      "relative_path": "purchase_contract_example.pdf",
+      "sha256": "713dcf64aa070869725340b562e7350fb8c007d4acec574fa87fa57a964bb72d",
+      "size_bytes": 512000,
+      "document_type": "PURCHASE_CONTRACT",
+      "classification_confidence": "HIGH",
+      "page_count": 12,
+      "status": "OK",
+      "duplicate_of": null,
+      "document_date": "2026-09-01",
+      "extraction_method": "TEXT_LAYER",
+      "borrower_names_found": [
+        "Test Borrower Alpha",
+        "Test Borrower Beta"
+      ]
+    },
+    {
+      "document_id": "DOC-005",
+      "filename": "credit_report_example.pdf",
+      "relative_path": "credit_report_example.pdf",
+      "sha256": "24ab7c9779d7ba43e7fd3d46d03fa11851662d7db232ae10a661be621bdb3b06",
+      "size_bytes": 98304,
+      "document_type": "CREDIT_REPORT",
+      "classification_confidence": "HIGH",
+      "page_count": 6,
+      "status": "OK",
+      "duplicate_of": null,
+      "document_date": "2026-08-18",
+      "extraction_method": "TEXT_LAYER",
+      "borrower_names_found": [
+        "Test Borrower Alpha",
+        "Test Borrower Beta"
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "evidence_id": "EV-001",
+      "document_id": "DOC-001",
+      "document_type": "URLA_1003",
+      "filename": "urla_1003_example.pdf",
+      "page": 1,
+      "document_date": "2026-08-20",
+      "field": "loan.purpose",
+      "extracted_value": "Purchase",
+      "extracted_text_snippet": "Loan Purpose: [X] Purchase  Occupancy: [X] Primary Residence  Loan Type: Conventional",
+      "extraction_confidence": "HIGH",
+      "extraction_method": "TEXT_LAYER"
+    },
+    {
+      "evidence_id": "EV-002",
+      "document_id": "DOC-001",
+      "document_type": "URLA_1003",
+      "filename": "urla_1003_example.pdf",
+      "page": 1,
+      "document_date": "2026-08-20",
+      "field": "loan.loan_amount",
+      "extracted_value": "400000.00",
+      "extracted_text_snippet": "Loan Amount $400,000.00",
+      "extraction_confidence": "HIGH",
+      "extraction_method": "TEXT_LAYER"
+    },
+    {
+      "evidence_id": "EV-003",
+      "document_id": "DOC-001",
+      "document_type": "URLA_1003",
+      "filename": "urla_1003_example.pdf",
+      "page": 1,
+      "document_date": "2026-08-20",
+      "field": "borrowers.full_name",
+      "extracted_value": "Test Borrower Alpha; Test Borrower Beta",
+      "extracted_text_snippet": "Borrower: Test Borrower Alpha  Co-Borrower: Test Borrower Beta  Citizenship (Borrower): U.S. Citizen",
+      "extraction_confidence": "HIGH",
+      "extraction_method": "TEXT_LAYER"
+    },
+    {
+      "evidence_id": "EV-004",
+      "document_id": "DOC-005",
+      "document_type": "CREDIT_REPORT",
+      "filename": "credit_report_example.pdf",
+      "page": 3,
+      "document_date": "2026-08-18",
+      "field": "liabilities.LIA-002.balance",
+      "extracted_value": "312000.00",
+      "extracted_text_snippet": "EXAMPLE MORTGAGE SERVICER  Mortgage  Balance $312,000  Payment $2,150  Acct ****7788",
+      "extraction_confidence": "HIGH",
+      "extraction_method": "TEXT_LAYER"
+    },
+    {
+      "evidence_id": "EV-005",
+      "document_id": "DOC-002",
+      "document_type": "PAYSTUB",
+      "filename": "paystub_alpha_2026-08-15.pdf",
+      "page": 1,
+      "document_date": "2026-08-15",
+      "field": "income.INC-001.gross_pay_period",
+      "extracted_value": "3250.00",
+      "extracted_text_snippet": "Example Employer LLC  Pay Period 08/01/2026-08/15/2026  Pay Frequency: Semi-Monthly  Gross Pay 3,250.00  Position: Analyst",
+      "extraction_confidence": "HIGH",
+      "extraction_method": "TEXT_LAYER"
+    },
+    {
+      "evidence_id": "EV-006",
+      "document_id": "DOC-003",
+      "document_type": "BANK_STATEMENT",
+      "filename": "bank_statement_example_2026-07.pdf",
+      "page": 1,
+      "document_date": "2026-07-31",
+      "field": "assets.AST-001.ending_balance",
+      "extracted_value": "48210.55",
+      "extracted_text_snippet": "Example Bank  Checking ****1234  Statement 07/01/2026 - 07/31/2026  Ending Balance $48,210.55",
+      "extraction_confidence": "HIGH",
+      "extraction_method": "OCR"
+    },
+    {
+      "evidence_id": "EV-007",
+      "document_id": "DOC-003",
+      "document_type": "BANK_STATEMENT",
+      "filename": "bank_statement_example_2026-07.pdf",
+      "page": 2,
+      "document_date": "2026-07-31",
+      "field": "assets.AST-001.large_deposits.0.amount",
+      "extracted_value": "12000.00",
+      "extracted_text_snippet": "07/18 MOBILE DEPOSIT 12,000.00",
+      "extraction_confidence": "LOW",
+      "extraction_method": "OCR"
+    },
+    {
+      "evidence_id": "EV-008",
+      "document_id": "DOC-004",
+      "document_type": "PURCHASE_CONTRACT",
+      "filename": "purchase_contract_example.pdf",
+      "page": 1,
+      "document_date": "2026-09-01",
+      "field": "contract.purchase_price",
+      "extracted_value": "500000.00",
+      "extracted_text_snippet": "Purchase Price $500,000.00  Earnest Money Deposit $10,000.00  Buyer(s): Test Borrower Alpha, Test Borrower Beta  Seller: Test Seller Gamma",
+      "extraction_confidence": "HIGH",
+      "extraction_method": "TEXT_LAYER"
+    },
+    {
+      "evidence_id": "EV-009",
+      "document_id": "DOC-004",
+      "document_type": "PURCHASE_CONTRACT",
+      "filename": "purchase_contract_example.pdf",
+      "page": 2,
+      "document_date": "2026-09-01",
+      "field": "contract.dates.closing_date",
+      "extracted_value": "2026-10-15",
+      "extracted_text_snippet": "Contract Date: 09/01/2026  Close of Escrow: 10/15/2026",
+      "extraction_confidence": "HIGH",
+      "extraction_method": "TEXT_LAYER"
+    },
+    {
+      "evidence_id": "EV-010",
+      "document_id": "DOC-005",
+      "document_type": "CREDIT_REPORT",
+      "filename": "credit_report_example.pdf",
+      "page": 2,
+      "document_date": "2026-08-18",
+      "field": "liabilities.LIA-001.balance",
+      "extracted_value": "18400.00",
+      "extracted_text_snippet": "EXAMPLE AUTO FINANCE  Installment  Balance $18,400  Payment $415  Acct ****4455",
+      "extraction_confidence": "HIGH",
+      "extraction_method": "TEXT_LAYER"
+    }
+  ],
+  "review_items": [
+    {
+      "review_id": "RV-001",
+      "category": "LOW_CONFIDENCE_EXTRACTION",
+      "description": "Large deposit description on DOC-003 page 2 was OCR-extracted with LOW confidence; confirm the 12000.00 amount and its source.",
+      "document_ids": [
+        "DOC-003"
+      ],
+      "evidence_ids": [
+        "EV-007"
+      ],
+      "reviewer_role": "PROCESSOR"
+    }
+  ],
+  "los_export": null
+}

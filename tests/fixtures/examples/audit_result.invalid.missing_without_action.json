@@ -1,0 +1,215 @@
+{
+  "schema_version": "1.0",
+  "loan_id": "LN-EXAMPLE-0001",
+  "run_id": "RUN-EXAMPLE-0001",
+  "audit_type": "PREAPPROVAL",
+  "generated_at": "2026-09-08T12:00:00Z",
+  "generated_by": {
+    "skill": "preapproval-audit",
+    "tool_versions": {
+      "python": "3.11"
+    }
+  },
+  "inputs": [
+    {
+      "path": "output/LN-EXAMPLE-0001/loan_file.json",
+      "sha256": "5ee1bf99167a25356c890d03533ff16c60f495718b0f00539377999b0bf4f456",
+      "role": "loan_file"
+    },
+    {
+      "path": "output/LN-EXAMPLE-0001/document_inventory.json",
+      "sha256": "71a3e4bd3921d73f7420a1e05acf0749553210adca8edfd44027f5a4ed9550ed",
+      "role": "document_inventory"
+    }
+  ],
+  "catalog": {
+    "path": "tests/fixtures/examples/checklist_catalog.valid.yaml",
+    "sha256": "6b790d0f4b901f2e308c9150eb18572dd89494c9dc83974dcd2f5627aa63a3ea",
+    "version": "0.1.0"
+  },
+  "overall_status": null,
+  "findings": [
+    {
+      "finding_id": "F-001",
+      "rule_id": "PRE-EXAMPLE-001",
+      "result": "PASS",
+      "evidence_ids": [
+        "EV-005"
+      ],
+      "explanation": "Paystub DOC-002 page 1 supports a salaried base of 6500.00 per month (3250.00 semi-monthly).",
+      "discrepancy": null,
+      "proposed_action": null,
+      "blocking": true,
+      "reviewer_role": null,
+      "confidence": "HIGH",
+      "review_reason": null,
+      "calculation": {
+        "method": "salaried_monthly_base",
+        "method_version": "1.0",
+        "inputs": {
+          "gross_pay_period": "3250.00",
+          "pay_frequency": "SEMI_MONTHLY",
+          "periods_per_year": 24
+        },
+        "formula": "gross_pay_period * periods_per_year / 12",
+        "intermediate_values": {
+          "annual_base": "78000.00"
+        },
+        "output": "6500.00",
+        "warnings": []
+      },
+      "guideline_source": null
+    },
+    {
+      "finding_id": "F-002",
+      "rule_id": "PRE-EXAMPLE-002",
+      "result": "FAIL",
+      "evidence_ids": [
+        "EV-002",
+        "EV-008"
+      ],
+      "explanation": "Placeholder failing item: the 1003 loan amount and contract purchase price were compared and did not satisfy the example rule.",
+      "discrepancy": "1003 loan amount 400000.00 vs contract purchase price 500000.00 (example only).",
+      "proposed_action": "Loan officer to confirm the intended loan amount with the borrower and correct the 1003.",
+      "blocking": true,
+      "reviewer_role": "LOAN_OFFICER",
+      "confidence": "HIGH",
+      "review_reason": null,
+      "calculation": null,
+      "guideline_source": null
+    },
+    {
+      "finding_id": "F-003",
+      "rule_id": "PRE-EXAMPLE-003",
+      "result": "MISSING",
+      "evidence_ids": [],
+      "explanation": "No W-2 for Test Borrower Alpha was found in the fixture directory.",
+      "discrepancy": null,
+      "proposed_action": null,
+      "blocking": true,
+      "reviewer_role": "PROCESSOR",
+      "confidence": "HIGH",
+      "review_reason": null,
+      "calculation": null,
+      "guideline_source": null
+    },
+    {
+      "finding_id": "F-004",
+      "rule_id": "PRE-EXAMPLE-004",
+      "result": "REVIEW",
+      "evidence_ids": [
+        "EV-007"
+      ],
+      "explanation": "A 12000.00 deposit on the 2026-07 statement is unsourced and its description was extracted at LOW confidence.",
+      "discrepancy": null,
+      "proposed_action": null,
+      "blocking": false,
+      "reviewer_role": "PROCESSOR",
+      "confidence": "LOW",
+      "review_reason": "Deposit source cannot be determined from the statement; a human must decide whether documentation is required.",
+      "calculation": null,
+      "guideline_source": null
+    },
+    {
+      "finding_id": "F-005",
+      "rule_id": "PRE-EXAMPLE-005",
+      "result": "NOT_APPLICABLE",
+      "evidence_ids": [
+        "EV-001"
+      ],
+      "explanation": "Placeholder item applies only to refinance transactions; the 1003 shows purpose Purchase.",
+      "discrepancy": null,
+      "proposed_action": null,
+      "blocking": false,
+      "reviewer_role": null,
+      "confidence": "HIGH",
+      "review_reason": null,
+      "calculation": null,
+      "guideline_source": null
+    }
+  ],
+  "summary": {
+    "counts": {
+      "PASS": 1,
+      "FAIL": 1,
+      "MISSING": 1,
+      "REVIEW": 1,
+      "NOT_APPLICABLE": 1
+    },
+    "blocking_open": 2,
+    "coverage": {
+      "catalog_items_in_phase": 6,
+      "items_evaluated": 5,
+      "coverage_percent": "83.3",
+      "unevaluated_rule_ids": [
+        "PRE-EXAMPLE-006"
+      ]
+    }
+  },
+  "missing_documents": [
+    {
+      "document_type": "W2",
+      "borrower_id": "B-1",
+      "description": "Most recent W-2 for Test Borrower Alpha.",
+      "rule_ids": [
+        "PRE-EXAMPLE-003"
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "conflict_id": "CF-001",
+      "field": "contract.purchase_price",
+      "values": [
+        {
+          "source": "USER_NOTE",
+          "value": "480000.00",
+          "evidence_ids": []
+        },
+        {
+          "source": "PURCHASE_CONTRACT",
+          "value": "500000.00",
+          "evidence_ids": [
+            "EV-008"
+          ]
+        }
+      ],
+      "explanation": "The user note states 480000.00 but the signed contract shows 500000.00. Source document outranks user note; the contract value is used and the note is flagged.",
+      "rule_ids": [
+        "PRE-EXAMPLE-002"
+      ]
+    }
+  ],
+  "approvals_required": [
+    {
+      "description": "Decide whether the unsourced 12000.00 deposit must be documented before preapproval.",
+      "approver_role": "UNDERWRITER",
+      "rule_ids": [
+        "PRE-EXAMPLE-004"
+      ]
+    }
+  ],
+  "known_limitations": [
+    "EXAMPLE FIXTURE: rule ids reference placeholder catalog items, not real checklist rules.",
+    "Commission, bonus, overtime, rental, self-employed, and asset-depletion income are not evaluated in this release.",
+    "No guideline lookups were performed; nothing here is a credit or compliance decision."
+  ],
+  "los_export_present": false,
+  "proposed_client_needs": [
+    {
+      "action_id": "PA-001",
+      "action_type": "CLIENT_NEED",
+      "target": "B-1",
+      "description": "Provide most recent W-2 and a source explanation for the 12000.00 deposit on 2026-07-18.",
+      "rule_ids": [
+        "PRE-EXAMPLE-003",
+        "PRE-EXAMPLE-004"
+      ],
+      "evidence_ids": [
+        "EV-007"
+      ],
+      "approver_role": "LOAN_OFFICER",
+      "status": "DRAFT_HUMAN_APPROVAL_REQUIRED"
+    }
+  ]
+}

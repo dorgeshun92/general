@@ -9,7 +9,14 @@
       "pattern": "^-?[0-9]+(\\.[0-9]+)?$"
     },
     "nullable_decimal_string": {
-      "oneOf": [ { "$ref": "#/$defs/decimal_string" }, { "type": "null" } ]
+      "oneOf": [
+        {
+          "$ref": "#/$defs/decimal_string"
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "iso_date": {
       "type": "string",
@@ -17,7 +24,14 @@
       "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
     },
     "nullable_iso_date": {
-      "oneOf": [ { "$ref": "#/$defs/iso_date" }, { "type": "null" } ]
+      "oneOf": [
+        {
+          "$ref": "#/$defs/iso_date"
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "iso_datetime": {
       "type": "string",
@@ -25,7 +39,15 @@
       "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\\.[0-9]+)?(Z|[+-][0-9]{2}:[0-9]{2})$"
     },
     "nullable_string": {
-      "oneOf": [ { "type": "string", "minLength": 1 }, { "type": "null" } ]
+      "oneOf": [
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "masked_account": {
       "type": "string",
@@ -33,14 +55,39 @@
       "pattern": "^\\*{2,}[0-9A-Za-z]{2,4}$"
     },
     "nullable_masked_account": {
-      "oneOf": [ { "$ref": "#/$defs/masked_account" }, { "type": "null" } ]
+      "oneOf": [
+        {
+          "$ref": "#/$defs/masked_account"
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
-    "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
-    "loan_id": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{1,63}$" },
-    "run_id": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{1,63}$" },
-    "document_id": { "type": "string", "pattern": "^DOC-[0-9]{3,6}$" },
-    "evidence_id": { "type": "string", "pattern": "^EV-[0-9]{3,6}$" },
-    "borrower_id": { "type": "string", "pattern": "^B-[0-9]{1,3}$" },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "loan_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{1,63}$"
+    },
+    "run_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{1,63}$"
+    },
+    "document_id": {
+      "type": "string",
+      "pattern": "^DOC-[0-9]{3,6}$"
+    },
+    "evidence_id": {
+      "type": "string",
+      "pattern": "^EV-[0-9]{3,6}$"
+    },
+    "borrower_id": {
+      "type": "string",
+      "pattern": "^B-[0-9]{1,3}$"
+    },
     "rule_id": {
       "type": "string",
       "description": "Stable checklist catalog id, e.g. PRE-CREDIT-001 or SUB-PROPERTY-004.",
@@ -48,135 +95,355 @@
     },
     "confidence": {
       "type": "string",
-      "enum": ["HIGH", "MEDIUM", "LOW"]
+      "enum": [
+        "HIGH",
+        "MEDIUM",
+        "LOW"
+      ]
     },
     "result_value": {
       "type": "string",
-      "enum": ["PASS", "FAIL", "MISSING", "REVIEW", "NOT_APPLICABLE"]
+      "enum": [
+        "PASS",
+        "FAIL",
+        "MISSING",
+        "REVIEW",
+        "NOT_APPLICABLE"
+      ]
     },
     "overall_status": {
       "type": "string",
-      "enum": ["READY", "NOT_READY", "HUMAN_REVIEW"]
+      "enum": [
+        "READY",
+        "NOT_READY",
+        "HUMAN_REVIEW"
+      ]
     },
     "reviewer_role": {
       "type": "string",
-      "enum": ["LOAN_OFFICER", "PROCESSOR", "UNDERWRITER", "COMPLIANCE", "MANAGEMENT"]
+      "enum": [
+        "LOAN_OFFICER",
+        "PROCESSOR",
+        "UNDERWRITER",
+        "COMPLIANCE",
+        "MANAGEMENT"
+      ]
     },
     "evaluation_method": {
       "type": "string",
-      "enum": ["deterministic", "guideline_lookup", "human_judgment"]
+      "enum": [
+        "deterministic",
+        "guideline_lookup",
+        "human_judgment"
+      ]
     },
     "extraction_method": {
       "type": "string",
-      "enum": ["TEXT_LAYER", "OCR", "MANUAL", "LOS_EXPORT", "USER_NOTE"]
+      "enum": [
+        "TEXT_LAYER",
+        "OCR",
+        "MANUAL",
+        "LOS_EXPORT",
+        "USER_NOTE"
+      ]
     },
     "document_type": {
       "type": "string",
       "description": "Classification of a source document. UNKNOWN is a valid, honest answer.",
       "enum": [
-        "URLA_1003", "CREDIT_REPORT", "CREDIT_SUPPLEMENT", "PAYSTUB", "W2", "1099",
-        "TAX_RETURN_PERSONAL", "TAX_RETURN_BUSINESS", "K1", "PROFIT_AND_LOSS",
-        "BUSINESS_LICENSE", "VOE_WRITTEN", "VOE_VERBAL", "OFFER_LETTER",
-        "BANK_STATEMENT", "RETIREMENT_STATEMENT", "BROKERAGE_STATEMENT",
-        "GIFT_LETTER", "GIFT_TRANSFER_PROOF", "EARNEST_MONEY_PROOF",
-        "PURCHASE_CONTRACT", "CONTRACT_ADDENDUM", "SELLER_DISCLOSURE",
-        "APPRAISAL", "TITLE_COMMITMENT", "PRELIM_TITLE", "HOMEOWNERS_INSURANCE",
-        "FLOOD_CERT", "HOA_STATEMENT", "CONDO_QUESTIONNAIRE", "MORTGAGE_STATEMENT",
-        "LEASE_AGREEMENT", "PROPERTY_TAX_BILL", "SOLAR_AGREEMENT",
-        "DIVORCE_DECREE", "CHILD_SUPPORT_ORDER", "BANKRUPTCY_DISCHARGE",
-        "LETTER_OF_EXPLANATION", "PHOTO_ID", "SOCIAL_SECURITY_AWARD",
-        "PENSION_AWARD", "VA_COE", "RESIDENCY_DOCUMENT", "AUS_FINDINGS",
-        "LOS_EXPORT", "PREAPPROVAL_LETTER", "OTHER", "UNKNOWN"
+        "URLA_1003",
+        "CREDIT_REPORT",
+        "CREDIT_SUPPLEMENT",
+        "PAYSTUB",
+        "W2",
+        "1099",
+        "TAX_RETURN_PERSONAL",
+        "TAX_RETURN_BUSINESS",
+        "K1",
+        "PROFIT_AND_LOSS",
+        "BUSINESS_LICENSE",
+        "VOE_WRITTEN",
+        "VOE_VERBAL",
+        "OFFER_LETTER",
+        "BANK_STATEMENT",
+        "RETIREMENT_STATEMENT",
+        "BROKERAGE_STATEMENT",
+        "GIFT_LETTER",
+        "GIFT_TRANSFER_PROOF",
+        "EARNEST_MONEY_PROOF",
+        "PURCHASE_CONTRACT",
+        "CONTRACT_ADDENDUM",
+        "SELLER_DISCLOSURE",
+        "APPRAISAL",
+        "TITLE_COMMITMENT",
+        "PRELIM_TITLE",
+        "HOMEOWNERS_INSURANCE",
+        "FLOOD_CERT",
+        "HOA_STATEMENT",
+        "CONDO_QUESTIONNAIRE",
+        "MORTGAGE_STATEMENT",
+        "LEASE_AGREEMENT",
+        "PROPERTY_TAX_BILL",
+        "SOLAR_AGREEMENT",
+        "DIVORCE_DECREE",
+        "CHILD_SUPPORT_ORDER",
+        "BANKRUPTCY_DISCHARGE",
+        "LETTER_OF_EXPLANATION",
+        "PHOTO_ID",
+        "SOCIAL_SECURITY_AWARD",
+        "PENSION_AWARD",
+        "VA_COE",
+        "RESIDENCY_DOCUMENT",
+        "AUS_FINDINGS",
+        "LOS_EXPORT",
+        "PREAPPROVAL_LETTER",
+        "OTHER",
+        "UNKNOWN"
       ]
     },
     "fact": {
       "type": "object",
       "description": "An extracted fact. A non-null value must cite at least one evidence record. Unknown values stay null.",
-      "required": ["value", "evidence_ids", "confidence"],
+      "required": [
+        "value",
+        "evidence_ids",
+        "confidence"
+      ],
       "properties": {
         "value": {},
         "evidence_ids": {
           "type": "array",
-          "items": { "$ref": "#/$defs/evidence_id" },
+          "items": {
+            "$ref": "#/$defs/evidence_id"
+          },
           "uniqueItems": true
         },
-        "confidence": { "$ref": "#/$defs/confidence" },
+        "confidence": {
+          "$ref": "#/$defs/confidence"
+        },
         "status": {
           "type": "string",
-          "enum": ["EXTRACTED", "REVIEW", "UNKNOWN", "CONFLICT"],
+          "enum": [
+            "EXTRACTED",
+            "REVIEW",
+            "UNKNOWN",
+            "CONFLICT"
+          ],
           "default": "EXTRACTED"
         },
-        "note": { "type": "string" }
+        "note": {
+          "type": "string"
+        }
       },
-      "if": { "properties": { "value": { "type": "null" } }, "required": ["value"] },
-      "then": { "properties": { "status": { "enum": ["UNKNOWN", "REVIEW", "CONFLICT"] } } },
-      "else": { "properties": { "evidence_ids": { "minItems": 1 } } },
+      "if": {
+        "properties": {
+          "value": {
+            "type": "null"
+          }
+        },
+        "required": [
+          "value"
+        ]
+      },
+      "then": {
+        "required": [
+          "status"
+        ],
+        "properties": {
+          "status": {
+            "enum": [
+              "UNKNOWN",
+              "REVIEW",
+              "CONFLICT"
+            ]
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "evidence_ids": {
+            "minItems": 1
+          }
+        }
+      },
       "additionalProperties": false
     },
     "money_fact": {
       "allOf": [
-        { "$ref": "#/$defs/fact" },
-        { "properties": { "value": { "$ref": "#/$defs/nullable_decimal_string" } } }
+        {
+          "$ref": "#/$defs/fact"
+        },
+        {
+          "properties": {
+            "value": {
+              "$ref": "#/$defs/nullable_decimal_string"
+            }
+          }
+        }
       ]
     },
     "date_fact": {
       "allOf": [
-        { "$ref": "#/$defs/fact" },
-        { "properties": { "value": { "$ref": "#/$defs/nullable_iso_date" } } }
+        {
+          "$ref": "#/$defs/fact"
+        },
+        {
+          "properties": {
+            "value": {
+              "$ref": "#/$defs/nullable_iso_date"
+            }
+          }
+        }
       ]
     },
     "string_fact": {
       "allOf": [
-        { "$ref": "#/$defs/fact" },
-        { "properties": { "value": { "$ref": "#/$defs/nullable_string" } } }
+        {
+          "$ref": "#/$defs/fact"
+        },
+        {
+          "properties": {
+            "value": {
+              "$ref": "#/$defs/nullable_string"
+            }
+          }
+        }
       ]
     },
     "boolean_fact": {
       "allOf": [
-        { "$ref": "#/$defs/fact" },
-        { "properties": { "value": { "type": ["boolean", "null"] } } }
+        {
+          "$ref": "#/$defs/fact"
+        },
+        {
+          "properties": {
+            "value": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            }
+          }
+        }
       ]
     },
     "integer_fact": {
       "allOf": [
-        { "$ref": "#/$defs/fact" },
-        { "properties": { "value": { "type": ["integer", "null"] } } }
+        {
+          "$ref": "#/$defs/fact"
+        },
+        {
+          "properties": {
+            "value": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            }
+          }
+        }
       ]
     },
     "period": {
       "type": "object",
-      "required": ["start", "end"],
+      "required": [
+        "start",
+        "end"
+      ],
       "properties": {
-        "start": { "$ref": "#/$defs/nullable_iso_date" },
-        "end": { "$ref": "#/$defs/nullable_iso_date" }
+        "start": {
+          "$ref": "#/$defs/nullable_iso_date"
+        },
+        "end": {
+          "$ref": "#/$defs/nullable_iso_date"
+        }
       },
       "additionalProperties": false
     },
     "address": {
       "type": "object",
-      "required": ["street", "city", "state", "postal_code"],
+      "required": [
+        "street",
+        "city",
+        "state",
+        "postal_code"
+      ],
       "properties": {
-        "street": { "$ref": "#/$defs/nullable_string" },
-        "unit": { "$ref": "#/$defs/nullable_string" },
-        "city": { "$ref": "#/$defs/nullable_string" },
-        "state": { "oneOf": [ { "type": "string", "pattern": "^[A-Z]{2}$" }, { "type": "null" } ] },
-        "postal_code": { "oneOf": [ { "type": "string", "pattern": "^[0-9]{5}(-[0-9]{4})?$" }, { "type": "null" } ] }
+        "street": {
+          "$ref": "#/$defs/nullable_string"
+        },
+        "unit": {
+          "$ref": "#/$defs/nullable_string"
+        },
+        "city": {
+          "$ref": "#/$defs/nullable_string"
+        },
+        "state": {
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^[A-Z]{2}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "postal_code": {
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9]{5}(-[0-9]{4})?$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
       },
       "additionalProperties": false
     },
     "calculation_trail": {
       "type": "object",
       "description": "Output of scripts/calculations. Every supported calculation must be reproducible from this record.",
-      "required": ["method", "method_version", "inputs", "formula", "intermediate_values", "output", "warnings"],
+      "required": [
+        "method",
+        "method_version",
+        "inputs",
+        "formula",
+        "intermediate_values",
+        "output",
+        "warnings"
+      ],
       "properties": {
-        "method": { "type": "string", "minLength": 1 },
-        "method_version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+(\\.[0-9]+)?$" },
-        "inputs": { "type": "object" },
-        "formula": { "type": "string", "minLength": 1 },
-        "intermediate_values": { "type": "object" },
+        "method": {
+          "type": "string",
+          "minLength": 1
+        },
+        "method_version": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]+(\\.[0-9]+)?$"
+        },
+        "inputs": {
+          "type": "object"
+        },
+        "formula": {
+          "type": "string",
+          "minLength": 1
+        },
+        "intermediate_values": {
+          "type": "object"
+        },
         "output": {},
-        "warnings": { "type": "array", "items": { "type": "string" } },
-        "rounding_policy": { "type": "string" }
+        "warnings": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "rounding_policy": {
+          "type": "string"
+        }
       },
       "additionalProperties": true
     }
