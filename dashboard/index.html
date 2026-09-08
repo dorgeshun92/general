@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mpire Audit Console</title>
+  <meta name="description" content="Read-only dashboard for Mpire mortgage file audits: derived, masked findings, review queue, and run requests.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="/dashboard/styles.css">
+</head>
+<body>
+  <a class="sr-only" href="#main">Skip to content</a>
+  <div class="shell">
+    <aside class="rail" aria-label="Sidebar">
+      <div class="brand">
+        <span class="brand-name">Mpire Audit Console</span>
+        <span class="brand-sub">MVP 1 · read-only auditor</span>
+      </div>
+      <nav class="nav" aria-label="Primary">
+        <a href="#/overview" data-nav="overview">Overview</a>
+        <a href="#/loans" data-nav="loans">Loans <span class="count"></span></a>
+        <a href="#/review" data-nav="review">Review queue <span class="count"></span></a>
+        <a href="#/requests" data-nav="requests">Run requests <span class="count"></span></a>
+        <a href="#/search" data-nav="search">Search</a>
+      </nav>
+      <div class="rail-foot">
+        <div id="conn" class="conn"><span class="dot" aria-hidden="true"></span><span class="who">Connecting…</span></div>
+        <button id="theme-toggle" class="btn btn-sm" type="button">Theme: system</button>
+        <button id="signout" class="btn btn-sm" type="button" hidden>Sign out</button>
+      </div>
+    </aside>
+
+    <div class="strip">
+      <div class="banner banner-decision" role="note">DECISION SUPPORT ONLY — not a credit or compliance decision</div>
+      <div id="preview-banner" class="banner banner-preview" role="status" hidden>
+        PREVIEW — sample data, not connected
+        <span class="spacer"></span>
+        <span class="plain">Writes are disabled. Serve the page from the API to connect.</span>
+      </div>
+    </div>
+
+    <main id="main" class="main" tabindex="-1">
+      <div class="loading">Connecting…</div>
+    </main>
+
+    <footer class="footer">
+      <span>Derived, masked data. No source documents are stored or shown.</span>
+      <span>Result language: PASS · FAIL · MISSING · REVIEW · NOT_APPLICABLE. Gate: READY · NOT_READY · HUMAN_REVIEW.</span>
+    </footer>
+  </div>
+
+  <!-- /config.js is served by the API; a 404 here (static preview, file://) is expected and handled. -->
+  <script src="/config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js" crossorigin="anonymous"></script>
+  <script src="/dashboard/demo-data.js"></script>
+  <script src="/dashboard/app.js"></script>
+</body>
+</html>

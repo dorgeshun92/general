@@ -19,9 +19,9 @@ CSP_DEFAULT = (
     "default-src 'self'; "
     "script-src 'self' https://cdn.jsdelivr.net; "
     "connect-src 'self' https://*.supabase.co wss://*.supabase.co; "
-    "style-src 'self' 'unsafe-inline'; "
+    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
     "img-src 'self' data:; "
-    "font-src 'self'; "
+    "font-src 'self' https://fonts.gstatic.com; "
     "object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
 )
 # Swagger UI (/api/docs) is an inline bootstrap script plus assets from jsdelivr; scoped to that path only.
