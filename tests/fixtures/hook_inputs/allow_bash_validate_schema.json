@@ -1,0 +1,7 @@
+{
+  "hook_event_name": "PreToolUse",
+  "tool_name": "Bash",
+  "tool_input": {
+    "command": "python scripts/validate_schema.py output/audits/LN-TEST-0001/RUN-1/loan_file.json --schema loan_file"
+  }
+}

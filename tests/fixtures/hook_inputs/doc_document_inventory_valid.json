@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0",
+  "loan_id": "LN-TEST-0001",
+  "run_id": "RUN-0001",
+  "generated_at": "2026-09-08T12:00:00Z",
+  "input_directory": "tests/fixtures/deidentified/LN-TEST-0001",
+  "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "documents": [],
+  "duplicates": [],
+  "unreadable": [],
+  "totals": {
+    "files": 0,
+    "pages": 0,
+    "bytes": 0
+  }
+}

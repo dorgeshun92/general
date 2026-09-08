@@ -22,8 +22,9 @@ Playbook section 15 lists what the first session should complete. Status as of
 | Four component skills and master orchestrator run on de-identified fixtures | Skills written; intake runs end to end on the edge-case fixtures; audit skills stop with "catalog empty" by design |
 | Every PASS contains evidence; every unknown remains unknown | Enforced by schema and validator |
 | Supported calculations deterministic and reproducible | Done, Decimal with full trails and tests |
-| System cannot access production credentials or perform external writes | No credentials exist; proposed deny rules and hooks written and unit-tested, **not yet activated** |
+| System cannot access production credentials or perform external writes | No credentials exist; `docs/security-plan.md`, `.claude/settings.proposed.json` (142 deny rules), and three hook scripts written and covered by 311 tests, **not yet activated**; see plan section 10 for items to verify against the official hooks docs first |
 | Test harness reports false PASS, evidence, calculation, schema, privacy failures | Done, compare-only until the `claude` CLI is on the pilot machine |
+| Unit test suite | 1,042 tests passing (`python -m pytest`) across schemas, calculations, intake, audit tooling, hooks, and the harness |
 | Licensed reviewer signs off on rules and answer keys | Open |
 | Retrospective test set meets section 10 targets | Open; needs 10 de-identified real files and answer keys |
 | Known limitations visible in every final report | Enforced by schema (`known_limitations` minItems 1) |

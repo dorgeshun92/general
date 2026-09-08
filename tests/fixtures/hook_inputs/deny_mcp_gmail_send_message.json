@@ -1,0 +1,7 @@
+{
+  "hook_event_name": "PreToolUse",
+  "tool_name": "mcp__gmail__send_message",
+  "tool_input": {
+    "to": "x@example.com"
+  }
+}

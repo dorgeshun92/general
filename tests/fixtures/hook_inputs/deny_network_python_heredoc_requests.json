@@ -1,0 +1,7 @@
+{
+  "hook_event_name": "PreToolUse",
+  "tool_name": "Bash",
+  "tool_input": {
+    "command": "python - <<'PY'\nimport requests\nprint(requests.get('http://example.com'))\nPY"
+  }
+}

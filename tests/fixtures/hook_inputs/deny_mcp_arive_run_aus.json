@@ -1,0 +1,5 @@
+{
+  "hook_event_name": "PreToolUse",
+  "tool_name": "mcp__arive__run_aus",
+  "tool_input": {}
+}

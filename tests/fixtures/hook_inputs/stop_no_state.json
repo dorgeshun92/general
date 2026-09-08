@@ -1,0 +1,5 @@
+{
+  "hook_event_name": "Stop",
+  "session_id": "hooktest-no-state-session",
+  "stop_hook_active": false
+}

@@ -1,0 +1,9 @@
+{
+  "hook_event_name": "PreToolUse",
+  "tool_name": "Edit",
+  "tool_input": {
+    "file_path": "tests/fixtures/deidentified/LN-TEST-0001/w2.pdf",
+    "old_string": "a",
+    "new_string": "b"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "hook_event_name": "PreToolUse",
+  "tool_name": "Write",
+  "tool_input": {
+    "file_path": "output/audits/LN-TEST-0001/RUN-1/loan_file.json",
+    "content": "{\"ssn\": \"123-45-6789\"}"
+  }
+}

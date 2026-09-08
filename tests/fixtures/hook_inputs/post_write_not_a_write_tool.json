@@ -1,0 +1,10 @@
+{
+  "hook_event_name": "PostToolUse",
+  "tool_name": "Bash",
+  "tool_input": {
+    "command": "ls"
+  },
+  "tool_response": {
+    "stdout": ""
+  }
+}

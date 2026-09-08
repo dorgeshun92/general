@@ -1,0 +1,8 @@
+{
+  "hook_event_name": "PreToolUse",
+  "tool_name": "Write",
+  "tool_input": {
+    "file_path": "tests/unit/test_example.py",
+    "content": "def test_ok():\n    assert True\n"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "hook_event_name": "PreToolUse",
+  "tool_name": "mcp__arive__update_loan",
+  "tool_input": {
+    "loan_id": "LN-TEST-0001"
+  }
+}

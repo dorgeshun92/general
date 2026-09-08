@@ -1,0 +1,5 @@
+{
+  "hook_event_name": "PreToolUse",
+  "tool_name": "mcp__clickup__create_task",
+  "tool_input": {}
+}

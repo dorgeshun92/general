@@ -1,0 +1,8 @@
+{
+  "hook_event_name": "PreToolUse",
+  "tool_name": "Write",
+  "tool_input": {
+    "file_path": "docs/source-checklists/preapproval.pdf",
+    "content": "%PDF-1.4"
+  }
+}

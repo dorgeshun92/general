@@ -1,0 +1,7 @@
+{
+  "hook_event_name": "PreToolUse",
+  "tool_name": "mcp__modelmatch__getLoan",
+  "tool_input": {
+    "id": "1"
+  }
+}
