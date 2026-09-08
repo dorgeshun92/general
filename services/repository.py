@@ -289,6 +289,8 @@ class InMemoryRepository:
         return rows[: max(1, limit)]
 
     def update_run_request(self, request_id, status, run_id=None) -> RunRequest:
+        if status not in ("QUEUED", "PICKED_UP", "COMPLETED", "REJECTED"):
+            raise ValueError(f"invalid run request status {status!r}")
         for i, r in enumerate(self.run_requests):
             if r.request_id == request_id:
                 updated = r.model_copy(update={"status": status, "run_id": run_id or r.run_id, "updated_at": now_iso()})
