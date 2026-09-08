@@ -5,14 +5,16 @@ Rules:
 - Account numbers keep only the last four characters: ****1234.
 - mask_text() is conservative: it masks anything that looks like an SSN and any
   run of 8+ digits (typical account numbers). Amounts with decimals or thousands
-  separators are left alone.
+  separators are left alone, as are digit runs inside hex digests.
 """
 from __future__ import annotations
 
 import re
 
 SSN_RE = re.compile(r"\b(\d{3})[- ]?(\d{2})[- ]?(\d{4})\b")
-LONG_DIGITS_RE = re.compile(r"(?<![\d.,$])(\d{8,})(?![\d.,])")
+# Digit runs adjacent to hex letters are part of a hash (sha256 digests routinely contain 8+ consecutive
+# digits) and are not masked; a genuine account number is not embedded in hex text.
+LONG_DIGITS_RE = re.compile(r"(?<![\d.,$A-Fa-f])(\d{8,})(?![\d.,A-Fa-f])")
 
 
 def mask_account(value: str | None, keep: int = 4) -> str | None:

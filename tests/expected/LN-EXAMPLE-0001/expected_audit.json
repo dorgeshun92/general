@@ -1,0 +1,115 @@
+{
+  "schema_version": "1.0",
+  "loan_id": "LN-EXAMPLE-0001",
+  "run_id": "EXAMPLE-ANSWER-KEY",
+  "audit_type": "SUBMISSION_READINESS",
+  "generated_at": "2026-09-08T00:00:00Z",
+  "generated_by": { "skill": "harness-self-test (EXAMPLE — not a real audit)" },
+  "inputs": [],
+  "catalog": {
+    "path": "config/checklist_catalog.yaml",
+    "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "version": "0.1.0"
+  },
+  "overall_status": "NOT_READY",
+  "findings": [
+    {
+      "finding_id": "F-001",
+      "rule_id": "SUB-EXAMPLE-001",
+      "result": "PASS",
+      "evidence_ids": ["EV-001"],
+      "explanation": "EXAMPLE — harness self-test, not a real checklist rule",
+      "discrepancy": null,
+      "proposed_action": null,
+      "blocking": true,
+      "reviewer_role": null,
+      "confidence": "HIGH",
+      "review_reason": null,
+      "calculation": {
+        "method": "example_monthly_income",
+        "method_version": "1.0",
+        "inputs": { "annual_salary": "14400.00" },
+        "formula": "annual_salary / 12",
+        "intermediate_values": {},
+        "output": "1200.00",
+        "warnings": []
+      }
+    },
+    {
+      "finding_id": "F-002",
+      "rule_id": "SUB-EXAMPLE-002",
+      "result": "FAIL",
+      "evidence_ids": ["EV-002"],
+      "explanation": "EXAMPLE — harness self-test, not a real checklist rule",
+      "discrepancy": "EXAMPLE placeholder discrepancy",
+      "proposed_action": "EXAMPLE placeholder action",
+      "blocking": true,
+      "reviewer_role": "PROCESSOR",
+      "confidence": "HIGH",
+      "review_reason": null
+    },
+    {
+      "finding_id": "F-003",
+      "rule_id": "SUB-EXAMPLE-003",
+      "result": "MISSING",
+      "evidence_ids": [],
+      "explanation": "EXAMPLE — harness self-test, not a real checklist rule",
+      "discrepancy": null,
+      "proposed_action": "EXAMPLE placeholder action: request the document",
+      "blocking": true,
+      "reviewer_role": "PROCESSOR",
+      "confidence": "HIGH",
+      "review_reason": null
+    },
+    {
+      "finding_id": "F-004",
+      "rule_id": "SUB-EXAMPLE-004",
+      "result": "REVIEW",
+      "evidence_ids": ["EV-003"],
+      "explanation": "EXAMPLE — harness self-test, not a real checklist rule",
+      "discrepancy": null,
+      "proposed_action": null,
+      "blocking": false,
+      "reviewer_role": "LOAN_OFFICER",
+      "confidence": "MEDIUM",
+      "review_reason": "EXAMPLE placeholder review reason"
+    },
+    {
+      "finding_id": "F-005",
+      "rule_id": "SUB-EXAMPLE-005",
+      "result": "NOT_APPLICABLE",
+      "evidence_ids": ["EV-004"],
+      "explanation": "EXAMPLE — harness self-test, not a real checklist rule",
+      "discrepancy": null,
+      "proposed_action": null,
+      "blocking": false,
+      "reviewer_role": null,
+      "confidence": "HIGH",
+      "review_reason": null
+    }
+  ],
+  "summary": {
+    "counts": { "PASS": 1, "FAIL": 1, "MISSING": 1, "REVIEW": 1, "NOT_APPLICABLE": 1 },
+    "blocking_open": 2,
+    "coverage": {
+      "catalog_items_in_phase": 5,
+      "items_evaluated": 5,
+      "coverage_percent": "100.00",
+      "unevaluated_rule_ids": []
+    }
+  },
+  "missing_documents": [
+    {
+      "document_type": "OTHER",
+      "borrower_id": null,
+      "description": "EXAMPLE placeholder missing document",
+      "rule_ids": ["SUB-EXAMPLE-003"]
+    }
+  ],
+  "conflicts": [],
+  "approvals_required": [],
+  "known_limitations": [
+    "EXAMPLE — harness self-test. This file is not a human-prepared answer key and evaluates no real checklist rule."
+  ],
+  "los_export_present": false
+}

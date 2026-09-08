@@ -1,0 +1,12 @@
+# Harness self-test fixture. NOT a real loan file and NOT a human-prepared answer key.
+loan_id: LN-EXAMPLE-0001
+deidentified: true
+deidentified_by: "harness self-test"
+deidentified_at: "2026-09-08"
+description: >
+  Synthetic placeholder used by tests/unit/test_eval_run_eval.py to exercise
+  scripts/eval/run_eval.py end to end. Contains no documents. The matching
+  answer key in tests/expected/LN-EXAMPLE-0001/ uses placeholder rule ids
+  (SUB-EXAMPLE-001..005) that do not exist in config/checklist_catalog.yaml.
+harness_self_test: true   # run_eval.py skips this fixture unless --include-self-test is given
+pii_pattern_allowlist: []
