@@ -31,6 +31,10 @@ paths:
 
 Sequential: step N+1 waits for step N to pass the evaluation suite (playbook §10).
 
+## System datastore (Supabase) — not an integration step
+- Holds only derived, masked outputs pushed by `scripts/sync/push_run.py` after
+  validation and the PII scan; service key stays in `.env`; see security plan §4.7.
+
 ## Design rules for any integration
 - Prefer an official API; browser automation only after the read-only workflow
   is stable, designed for screen changes, timeouts, duplicates, and rollback.

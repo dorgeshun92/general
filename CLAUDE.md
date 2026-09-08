@@ -46,6 +46,10 @@ Model inference can never be treated as a verified fact.
   `deidentified: true`. Stop if a directory appears to hold live PII.
 - Currency values are decimal strings (never floats). Dates are ISO 8601.
   Account numbers appear only masked (`****1234`). Unknown values stay null.
+- Supabase stores derived, masked outputs only, pushed by `scripts/sync/`
+  after validation and the PII scan. Keys live in `.env`; the service role key
+  is never used from a browser or committed. Dashboard writes are append-only
+  decisions and run requests; audit content is immutable once synced.
 
 ## Architecture
 - `CLAUDE.md` — these always-on rules. Procedures live in skills, not here.
@@ -60,6 +64,10 @@ Model inference can never be treated as a verified fact.
 - `docs/` — source checklists, approved guidelines, security plan, decisions.
 - `tests/` — unit tests, de-identified fixtures, human answer keys.
 - `output/` — derived artifacts only; ignored by Git.
+- `services/` — models, repository protocol (memory or Supabase), run loader
+  with schema and PII gates. `api/` — FastAPI REST + dashboard host.
+  `mcp_server/` — the `mpire-audit` MCP server. `dashboard/` — static UI.
+  `supabase/` — schema with RLS. `scripts/sync/` — the only outbound path.
 
 ## Scripts for facts, models for judgment
 Deterministic code handles date arithmetic, monthly averages, YTD comparison,

@@ -29,6 +29,19 @@ Playbook section 15 lists what the first session should complete. Status as of
 | Retrospective test set meets section 10 targets | Open; needs 10 de-identified real files and answer keys |
 | Known limitations visible in every final report | Enforced by schema (`known_limitations` minItems 1) |
 
+## Dashboard tier (added after the first session)
+
+| Component | Status |
+|---|---|
+| Supabase schema with RLS, views, search RPC | Written; apply `supabase/migrations/0001_init.sql` to your project |
+| Service layer (models, memory + Supabase repositories, run loader with PII gate) | Done, unit-tested against a mock PostgREST transport |
+| REST API (`api/`, `docs/api-contract.md`) | Done; memory mode serves demo data, Supabase mode forwards user JWTs |
+| MCP server (`mcp_server/`, `.mcp.json`) | Done; read tools plus append-only decision and run-request writes |
+| Dashboard (`dashboard/`) | Done; preview mode with sample data when not connected |
+| Sync script (`scripts/sync/push_run.py`) | Done; the only outbound path; validates and PII-scans first |
+| Hook allowlist for `python -m api` / `python -m mcp_server` / `mcp__mpire-audit` | Proposed only (`docs/security-plan.md` §4.7) |
+| Supabase project credentials | Not provided; fill `.env` from `.env.example` |
+
 ## Next actions, in order
 
 1. Copy the three checklist PDFs into `docs/source-checklists/`.

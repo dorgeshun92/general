@@ -27,7 +27,12 @@ compliance decision.
 | `scripts/audit/` | Readiness gate, report renderer, run manifest. |
 | `scripts/drafts/` | Borrower-facing DRAFT builder (never sends). |
 | `scripts/eval/`, `scripts/catalog/` | Evaluation harness and catalog coverage tools. |
-| `docs/` | Playbook, security plan, normalization procedure, decisions needed. |
+| `services/` | Shared models, repository protocol (memory or Supabase), run loader with schema and PII gates. |
+| `api/` | FastAPI REST service (`docs/api-contract.md`) that also serves the dashboard. |
+| `mcp_server/` | The `mpire-audit` MCP server for Claude Code and other MCP clients (`.mcp.json`). |
+| `dashboard/` | Static dashboard: overview, loans, run detail, review queue, run requests, search. |
+| `supabase/` | Postgres schema with row-level security; `scripts/sync/` pushes runs to it. |
+| `docs/` | Playbook, security plan, API contract, normalization procedure, decisions needed. |
 | `tests/` | Unit tests, de-identified fixtures, human answer keys. |
 | `output/` | Derived artifacts only. Ignored by Git. |
 
@@ -39,6 +44,17 @@ python -m pytest                      # everything must be green
 python scripts/validate_schema.py config/checklist_catalog.yaml --schema checklist_catalog
 python scripts/intake/inventory.py tests/fixtures/deidentified/LN-EDGE-CLEAN --run-id demo
 ```
+
+Dashboard, API, and MCP server on demo data (no Supabase needed):
+
+```bash
+MPIRE_REPO_BACKEND=memory python -m api          # dashboard at http://127.0.0.1:8080, API docs at /api/docs
+python -m mcp_server --selftest                  # MCP server smoke test; .mcp.json registers it for Claude Code
+```
+
+To connect Supabase: apply `supabase/migrations/0001_init.sql`, copy `.env.example`
+to `.env`, set `MPIRE_REPO_BACKEND=supabase`, and push a run with
+`python scripts/sync/push_run.py <loan_id> <run_id>`. See `supabase/README.md`.
 
 Then, inside Claude Code in this directory:
 

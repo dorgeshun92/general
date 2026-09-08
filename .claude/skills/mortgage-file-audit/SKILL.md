@@ -108,3 +108,17 @@ For every conclusion above the source file and page are cited; where evidence is
 `sources: []`. Until the normalization procedure is run and a licensed reviewer signs off,
 every run of this skill will stop at step 4 with "guideline support is unavailable (catalog
 empty)" after intake completes. That is the intended behavior; report it plainly.
+
+## After a completed run: publishing to the dashboard (manual, separate step)
+
+This skill never pushes anything anywhere. When a run has completed and its outputs
+validate, a person may publish the derived, masked outputs to the dashboard datastore:
+
+```
+python scripts/sync/push_run.py <loan_id> <run_id> --dry-run   # validates, PII-scans, prints what would go
+python scripts/sync/push_run.py <loan_id> <run_id>             # requires .env with Supabase keys
+```
+
+If the run was started from a dashboard run request, note the request id in the
+completion report so the requester can mark it COMPLETED.
+

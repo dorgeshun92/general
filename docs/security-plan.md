@@ -136,6 +136,38 @@ integration step's "first permission" in `.claude/rules/integrations.md`.
 | Fail closed | `run_fail_closed` in every script; validator exit ≠ 0/1 → block; malformed stdin → exit 2; wrong payload shapes → exit 2 | `test_hooks_common.py`, `failclosed_*` fixtures, `malformed_stdin.json` |
 | Loop guard (reviewer decision) | After `MAX_CONSECUTIVE_BLOCKS = 3` consecutive Stop blocks in one session the gate lets the session stop and emits a `systemMessage` stating the run is NOT complete. Set to `None` for strict mode. | `test_loop_guard_releases_with_system_message` |
 
+### 4.7 System datastore tier: Supabase, REST API, MCP server
+
+Supabase is this system's own datastore for **derived, masked** outputs (see
+`supabase/README.md`). It is not an LOS and writing to it is not one of the
+approval-gated external writes in CLAUDE.md rule 8, but it is still an outbound
+network path, so it is governed here.
+
+| Control | Where | Status |
+|---|---|---|
+| Only `output/audits/<loan>/<run>/` JSON and Markdown leave the machine, after schema validation and the PII scan in `services/run_loader.py` | `scripts/sync/push_run.py` | implemented; refuses on any failure |
+| Source documents never leave: the loader reads only derived files; no table stores document content | `supabase/migrations/0001_init.sql` | implemented |
+| Database constraints mirror the schema invariants (PASS needs evidence, FAIL/MISSING need an action, REVIEW needs a reviewer) so even the service key cannot store an unevidenced PASS | migration | implemented |
+| RLS on every table; signed-in users read; dashboard writes are append-only rows stamped with `auth.uid()` (`run_requests`, `review_decisions`, `action_decisions`) | migration | implemented |
+| The service role key lives only in `.env` (denied to Claude by 4.1) and is used only by the sync script, the service-only API routes, and the MCP server on a trusted machine | `.env.example`, `api/auth.py`, `mcp_server/` | implemented |
+| The API forwards the user's Supabase JWT to PostgREST so RLS applies per user; service routes require `X-Service-Key` | `api/auth.py` | implemented |
+| The MCP server (`mpire-audit`) has no tool that sends, writes to an LOS, runs AUS, triggers TRID, prices, submits, reads source documents, or starts an audit run; its only writes are run requests and relayed human decisions in our own tables | `mcp_server/server.py` | implemented; verified by `tests/unit/test_mcp_*.py` |
+| `.mcp.json` registers `mpire-audit` with `MPIRE_REPO_BACKEND=memory`; nothing reaches Supabase until a person changes it | `.mcp.json` | implemented |
+
+**Hook interaction (proposed change, not applied).** The current `pre_tool_guard.py`
+denies `python -m api`, `python -m mcp_server`, and every `mcp__mpire-audit__*` tool
+(module allowlist and the empty `MCP_ALLOWLIST`). `python scripts/sync/push_run.py` is
+allowed as a repository script, which is the intended single outbound path. When the
+dashboard tier is approved, open exactly these, via change control (section 9):
+
+1. Add `api` and `mcp_server` to the `python -m` allowlist in `_check_python`.
+2. Add the read-only `mcp__mpire-audit__mortgage_*` tools to `MCP_ALLOWLIST`. The
+   write-verb check keeps `mortgage_create_run_request` denied from inside Claude Code
+   (it contains `create`); that is intended: requests come from the dashboard.
+3. Add fixtures `allow_python_m_api`, `allow_python_m_mcp_server`,
+   `allow_mcp_mpire_audit_read`, `deny_mcp_mpire_audit_create_run_request` and rows in
+   `docs/hook-test-log.md`.
+
 ## 5. Threat model
 
 | # | Threat | Control | How tested |
